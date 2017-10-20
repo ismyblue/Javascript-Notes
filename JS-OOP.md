@@ -2,13 +2,14 @@
 
 
 [TOC]
+
 <a href="top"></a>
 
 说明：
 先写html再写css,最后写js。js里面定义很多类，类里面函数写操作html，css的代码和相关变量。最后html里面new对象，用面对对象的思想去编程，操作new出来的对象就行了，对象会自己去做变更html，css的内容。
 
 ### 0.定义函数的方法
-**1. 声明式，基本方式**
+- **声明式，基本方式**
 ```
 function functionName(arg0, arg1, ... argN) {
   	to do something;
@@ -22,7 +23,7 @@ function sayHello(sName , sMessage){
 
 ```
 
-**2.  Function 类直接创建函数的语法**
+- **Function 类直接创建函数的语法**
 **函数也是一个对象，用一个变量去接收函数对象**
 ```
 //注意是大写Function 
@@ -142,4 +143,4 @@ oCar.showColor();		//输出 "red"
 ```
 [Back totop](#top) 
 
-### 定义类和对象
+### 3.定义类和对象
