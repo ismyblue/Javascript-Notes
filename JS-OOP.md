@@ -15,7 +15,7 @@ ECMAScript是一个标准文档，javascript的语法规则就是ECMAScript里�
 ### 0.定义函数的方法
 <a href="0"></a>
 
-- **声明式，基本方式**
+#### 0.1.声明式，基本方式**
 ```
 function functionName(arg0, arg1, ... argN) {
   	to do something;
@@ -27,9 +27,8 @@ function sayHello(sName , sMessage){
 	alert("Hello " + name + sMessage);
 }
 ```
-[Back to 0capter](#0)
 
-- **Function 类直接创建函数的语法**
+#### 0.2.Function 类直接创建函数的语法
 **函数也是一个对象，用一个变量去接收函数对象**
 ```
 //注意是大写Function 
@@ -48,25 +47,37 @@ callAnotherFunc(sayHello, "Bruce");
 
 ```
 [Back to 0capter](#0)
+
 [Back to top](#top)
 
 ###***开启Js面对对象编程篇章***
 
 ### 1. 面对对象术语
 
-#### 对象
+<a href="1"></a>
+
+#### 1.1对象
+
 ECMA-262 把对象（object）定义为“属性的无序集合，每个属性存放一个原始值、对象或函数”。严格来说，这意味着对象是无特定顺序的值的数组。
 尽管 ECMAScript 如此定义对象，但它更通用的定义是基于代码的名词（人、地点或事物）的表示。
 
-#### 类
+[Back to 1capter](#1)
+
+#### 1.2.类
+
 每个对象都由类定义，可以把类看做对象的配方。类不仅要定义对象的接口（interface）（开发者访问的属性和方法），还要定义对象的内部工作（使属性和方法发挥作用的代码）。编译器和解释程序都根据类的说明构建对象。
 
-#### 实例
+[Back to 1capter](#1)
+
+#### 1.3.实例
+
 程序使用类创建对象时，生成的对象叫作类的实例（instance）。对类生成的对象的个数的唯一限制来自于运行代码的机器的物理内存。每个实例的行为相同，但实例处理一组独立的数据。由类创建对象实例的过程叫做实例化（instantiation）。
 在前面的章节我们提到过，ECMAScript 并没有正式的类。相反，ECMA-262 把对象定义描述为对象的配方。这是 ECMAScript 逻辑上的一种折中方案，因为对象定义实际上是对象自身。即使类并不真正存在，我们也把对象定义叫做类，因为大多数开发者对此术语更熟悉，而且从功能上说，两者是等价的。
 
+[Back to 1capter](#1)
 
-#### 面向对象语言的要求
+
+#### 1.4.面向对象语言的要求
 
 一种面向对象语言需要向开发者提供四种基本能力：
 >封装、聚集、继承、多态
@@ -78,18 +89,25 @@ ECMA-262 把对象（object）定义为“属性的无序集合，每个属性�
 
 ECMAScript 支持这些要求，因此可被是看做面向对象的。
 
-#### 对象的构成
+[Back to 1capter](#1)
+
+#### 1.5.对象的构成
 
 在ECMAScript中，对象由特性(attribute)构成。
 特性可以是原始值，也可以是引用值。
 如果特性存放的是函数，他就是对象的方法(method).
 否则该特性被看作对象的属性(property).
+
+[Back to 1capter](#1)
 [Back to top](#top)
 
 
 ### 2. 作用域
 
-#### 公有、私有、受保护的作用域
+<a href="2"></a>
+
+#### 2.1.公有、私有、受保护的作用域
+
 在传统的面向对象程序设计中，主要关注于公用和私有作用域。
 公有作用域下中的对象属性可以从对象外部访问，即开发者创建对象后就可以使用这个对象的公有属性，直接可以使用赋值符号"="更改这些属性。
 (访问：var 变量 = 对象.公有属性;        赋值:对象.公有属性 = 值;）
@@ -98,21 +116,31 @@ ECMAScript 支持这些要求，因此可被是看做面向对象的。
 ( ***错误：***~~访问：var 变量 = 对象.私有属性;   赋值：对象.私有属性 = 值;~~
 ***正确：***访问：var 变量 = 对象.返回私有属性的函数();     赋值： 对象.设置私有属性的函数();    )
 
-#### ECMAScript 只有公用作用域！
+[Back to 1capter](#2)
+
+#### 2.2.ECMAScript 只有公用作用域！
+
  ECMAScript 中只存在一种作用域 - ***公用作用域***！ECMAScript 中的所有对象的所有属性和方法都是公用的。因此，定义自己的类和对象时，必须格外小心。记住，所有属性和方法默认都是公用的！ 
  
 - **建议性的解决方法**
+
 许多开发者都在网上提出了有效的属性作用域模式，解决了 ECMAScript 的这种问题。
 由于缺少私有作用域，开发者确定了一个规约，说明哪些属性和方法应该被看做私有的。这种规约规定在属性前后加下划线：
 obj._color_ = "blue";
 这段代码中，属性 color 是私有的。注意，下划线并不改变属性是公用属性的事实，它只是告诉其他开发者，应该把该属性看作私有的。
 有些开发者还喜欢用单下划线说明私有成员，例如：obj._color。
 
-#### 静态作用域
+[Back to 2capter](#2)
+
+#### 2.3.静态作用域
+
 静态作用域定义的属性和方法任何时候都能从同一位置访问。在 Java 中，类可具有属性和方法，无需实例化该类的对象，即可访问这些属性和方法，例如 java.net.URLEncoder 类，它的函数 encode() 就是静态方法。
 通俗来讲就是 静态变量或者静态函数，整个类只有这样一个变量或者函数，这个类的所有实例对象共同拥有这一个变量和函数。
 
-#### ECMAScript 没有静态作用域
+[Back to 2capter](#2)
+
+#### 2.4.ECMAScript 没有静态作用域
+
 严格来说，ECMAScript 并没有静态作用域。不过，它可以给构造函数提供属性和方法。还记得吗，构造函数只是函数。**函数是对象**，对象可以有属性和方法。例如：
 
 ```
@@ -128,7 +156,10 @@ sayHello.alternate();	//输出 hi
 ```
 函数是也是一个对象是一个对象是一个对象！！！方法alternate()实际上是函数sayHello对象的一个方法。并且是公有方法，而不是静态方法。
 
-#### 关键字this
+[Back to 2capter](#2)
+
+#### 2.5.关键字this
+
 在 ECMAScript 中，要掌握的最重要的概念之一是关键字 this 的用法，它用在对象的方法中。***关键字 this 总是指向调用该方法的对象***，(this代表本对象，本类)例如：
 ```
 var oCar = new Object;
@@ -148,14 +179,22 @@ oCar.showColor = function() {
 
 oCar.showColor();		//输出 "red"
 ```
+
+[Back to 2capter](#2)
 [Back to top](#top) 
 
 ### 3.定义类和对象
+
+<a href="#3"></a>
+
 >使用域定义对象只是使用预定义对象只是面向对象语言的能力的一部分，它真正强大之处在于能够创建自己专用的类和对象。
 ECMAScript 拥有很多创建对象或类的方法。但是ECMScript里面没有创建类的明确定义，一切皆对象。我们也可以通过创建特殊对象来模拟类
 
-#### **工厂方式 **
-##### （1）原始方式：对象的属性可以在对象创建后动态定义，所以我们先创建一个Object对象，再动态的给他添加变量和函数。例如
+#### 3.1.工厂方式 
+
+##### 3.1.1原始方式
+对象的属性可以在对象创建后动态定义，所以我们先创建一个Object对象，再动态的给他添加变量和函数。例如
+
 ```
         var oCar = new Object;
         oCar.color = "blue";
@@ -169,7 +208,8 @@ ECMAScript 拥有很多创建对象或类的方法。但是ECMScript里面没有
 在上面的代码中，创建对象 car。然后给它设置几个属性：它的颜色是蓝色，有四个门，每加仑油可以跑 25 英里。最后一个属性实际上是指向函数的指针，意味着该属性是个方法。执行这段代码后，就可以使用对象 car。
 不过这里有一个问题，就是可能需要创建多个 car 的实例，那就又要重写许多重复的代码
 
-##### （2）解决方案:工厂方式
+##### 3.1.2解决方案:工厂方式
+
 写一个可以返回特定类型的对象的函数，每次需要新对象，就调用这个函数创建一个对象。例如：
 ```
 function createCar(sColor, iDoors, iMpg){
@@ -191,8 +231,10 @@ oCar2.showColor();		//red
 原始方式就是，先new一个Object对象，通过自定义动态添加属性和函数的方法来创建一个独一无二的对象.
 而工厂方式就是，写一个返回Object对象的函数createObject(arg0,aeg1...argN)，在函数体里面用原始方法创建一个对象，然后把这个对象返回(return)出去。需要新对象时，调用这个createObject(arg0,arg1,...,argN)，用一个变量来接收返回的对象。
 
+[Back to 3capter](#3)
 
-#####  **（3）在工厂函数外定义对象的方法**
+#####  3.1.3.在工厂函数外定义对象的方法
+
 >虽然 ECMAScript 越来越正式化，但创建对象的方法却被置之不理，且其规范化至今还遭人反对。一部分是语义上的原因（它看起来不像使用带有构造函数 new 运算符那么正规），一部分是功能上的原因。功能原因在于用这种方式必须创建对象的方法。***前面的例子中，每次调用函数 createCar()，都要创建新函数 showColor()，意味着每个对象都有自己的 showColor() 版本。而事实上，每个对象都共享同一个函数。***
 有些开发者在工厂函数外定义对象的方法，然后通过属性指向该方法，从而避免这个问题：
 
@@ -220,8 +262,10 @@ oCar2.showColor();		//输出 "blue"
 在函数 createCar() 之前定义了函数 showColor()。在 createCar() 内部，赋予对象一个指向已经存在的 showColor() 函数的指针。
 从功能上讲，这样解决了重复创建函数对象的问题；但是从语义上讲，该函数不太像是对象的方法。
 
+[Back to 3capter](#3)
 
-#### 构造函数方式
+#### 3.2.构造函数方式
+
 创建构造函数就像创建工厂函数一样容易。第一步选择类名，即构造函数的名字。根据惯例，这个名字的首字母大写，以使它与首字母通常是小写的变量名分开。除了这点不同，构造函数看起来很像工厂函数。
 
 ```
@@ -244,11 +288,47 @@ oCar2.showColor();		//输出 "blue"
 首先在构造函数内没有创建对象，而是使用 this 关键字。
 **使用 new 运算符构造函数时，在执行第一行代码前先创建一个对象，只有用 this 才能访问该对象。然后可以直接赋予 this 属性，默认情况下是构造函数的返回值（不必明确使用 return 运算符）。**
 构造函数方式和工厂方式似乎没有什么区别，因为获得新对象时，其本质上都是用原始方式，创建了一个Object对象，然后再自定义属性和函数，然后再把这个对象返回出去返回出去。只不过用构造函数方式，创建对象是用new关键字，看起来更像是一个类实例化对象的方式。
-##### 构造函数的缺点
+
+##### 3.2.1构造函数的缺点
+
 构造函数的缺点就是：同一个构造函数的对象实例之间无法共享属性或方法。
+每个方法都被重新创建了一次
 
+[Back to 3capter](#3)
 
-#### 原型方式
+#### 3.3.混合工厂方式
+
+这种方式通常是在不能应用前一种方式时的变通方法。它的目的是创建假构造函数，只返回另一种对象的新实例。
+这段代码看起来与工厂函数非常相似：
+```
+function Car() {
+  var oTempCar = new Object;
+  oTempCar.color = "blue";
+  oTempCar.doors = 4;
+  oTempCar.mpg = 25;
+  oTempCar.showColor = function() {
+    alert(this.color);
+  };
+
+  return oTempCar;
+}
+
+var car = new Car();
+car.showColor();
+```
+与经典方式不同，这种方式使用 new 运算符，使它看起来像真正的构造函数：
+由于在 Car() 构造函数内部调用了 new 运算符，所以将***忽略***第二个 new 运算符（位于构造函数之外），在构造函数内部创建的对象被传递回变量 car。
+这种方式在对象方法的内部管理方面与经典方式有着相同的问题。***强烈建议：除非万不得已，还是避免使用这种方式。***
+
+[Back to 3capter](#3)
+
+#### 3.4.原型方式
+
+>为了解决构造函数的对象实例之间无法共享属性的缺点，js提供了prototype属性。
+　　js中每个数据类型都是对象（除了null和undefined），而每个对象都继承自另外一个对象，后者称为“原型”（prototype）对象，只有null除外，它没有自己的原型对象。
+　　原型对象上的所有属性和方法，都会被对象实例所共享。
+　　通过构造函数生成对象实例时，会将对象实例的原型指向构造函数的prototype属性。**每一个构造函数都有一个prototype属性，这个属性就是对象实例的原型对象。**
+
 该方式利用了对象的 prototype 属性，可以把它看成创建新对象所依赖的原型。
 这里，首先用空构造函数来设置类名。然后所有的属性和方法都被直接赋予 prototype 属性。我们重写了前面的例子，代码如下：
 
@@ -276,7 +356,205 @@ oCar2.showColor();		//输出 "blue"
         alert(oCar1 instanceof Car);	//输出 "true"
 ```
 
-##### 原型方式出现的问题
+##### 3.5.原型方式出现的问题
 首先，这个构造函数没有参数。使用原型方式，不能通过给构造函数传递参数来初始化属性的值，因为 Car1 和 Car2 的 color 属性都等于 "blue"，doors 属性都等于 4，mpg 属性都等于 25。这意味着必须在对象创建后才能改变属性的默认值，这点很令人讨厌，但还没完。真正的问题出现在属性指向的是对象，而不是函数时。函数共享不会造成问题，但对象却很少被多个实例共享。请思考下面的例子：
 
+```
+function Car() {
+}
 
+Car.prototype.color = "blue";
+Car.prototype.doors = 4;
+Car.prototype.mpg = 25;
+Car.prototype.drivers = new Array("Mike","John");
+Car.prototype.showColor = function() {
+  alert(this.color);
+};
+
+var oCar1 = new Car();
+var oCar2 = new Car();
+
+oCar1.drivers.push("Bill");
+
+alert(oCar1.drivers);	//输出 "Mike,John,Bill"
+alert(oCar2.drivers);	//输出 "Mike,John,Bill"
+```
+
+上面的代码中，属性 drivers 是指向 Array 对象的指针，该数组中包含两个名字 "Mike" 和 "John"。由于 drivers 是引用值，Car 的两个实例都指向同一个数组。这意味着给 oCar1.drivers 添加值 "Bill"，在 oCar2.drivers 中也能看到。输出这两个指针中的任何一个，结果都是显示字符串 "Mike,John,Bill"。
+由于创建对象时有这么多问题，你一定会想，是否有种合理的创建对象的方法呢？答案是有，需要***联合使用构造函数和原型方式。***
+
+[Back to 3capter](#3)
+
+#### 3.6.混合的构造函数/原型方式
+
+联合使用构造函数和原型方式，就可像用其他程序设计语言一样创建对象。***这种概念非常简单，即用构造函数定义对象的所有非函数属性，用原型方式定义对象的函数属性（方法）。***结果是，所有函数都只创建一次，而每个对象都具有自己的对象属性实例。
+我们重写了前面的例子，代码如下：
+
+```
+function Car(sColor,iDoors,iMpg) {
+  this.color = sColor;
+  this.doors = iDoors;
+  this.mpg = iMpg;
+  this.drivers = new Array("Mike","John");
+}
+
+Car.prototype.showColor = function() {
+  alert(this.color);
+};
+
+var oCar1 = new Car("red",4,23);
+var oCar2 = new Car("blue",3,25);
+
+oCar1.drivers.push("Bill");
+
+alert(oCar1.drivers);	//输出 "Mike,John,Bill"
+alert(oCar2.drivers);	//输出 "Mike,John"
+```
+
+现在就更像创建一般对象了。***所有的非函数属性都在构造函数中创建，***意味着又能够用构造函数的参数赋予属性默认值了。因为只创建 showColor() 函数的一个实例，所以没有内存浪费。此外，给 oCar1 的 drivers 数组添加 "Bill" 值，不会影响到 oCar2 的数组，所以输出这些数组的值时，oCar1.drivers 显示的是 "Mike,John,Bill"，而 oCar2.drivers 显示的是 "Mike,John"。因为使用了原型方式，所以仍然能利用 instanceof 运算符来判断对象的类型。
+这种方式是 ECMAScript 采用的主要方式，它具有其他方式的特性，却没有他们的副作用。不过，有些开发者仍觉得这种方法不够完美。
+
+[Back to 3capter](#3)
+
+#### 3.7.动态原型方法
+
+对于习惯使用其他语言的开发者来说，使用混合的构造函数/原型方式感觉不那么和谐。毕竟，定义类时，大多数面向对象语言都对属性和方法进行了视觉上的封装。
+批评混合的构造函数/原型方式的人认为，在构造函数内部找属性，在其外部找方法的做法不合逻辑。因此，他们设计了动态原型方法，以提供更友好的编码风格。
+
+动态原型方法的基本想法与混合的构造函数/原型方式相同，即在构造函数内定义非函数属性，而函数属性则利用原型属性定义。***唯一的区别是赋予对象方法的位置。***下面是用动态原型方法重写的 Car 类：
+
+其实就是用个标记
+
+```
+function Car(sColor,iDoors,iMpg) {
+  this.color = sColor;
+  this.doors = iDoors;
+  this.mpg = iMpg;
+  this.drivers = new Array("Mike","John");
+  
+  if (typeof Car._initialized == "undefined") {
+    Car.prototype.showColor = function() {
+      alert(this.color);
+    };
+	
+    Car._initialized = true;
+  }
+}
+```
+
+直到检查 typeof Car._initialized 是否等于 "undefined" 之前，这个构造函数都未发生变化。这行代码是动态原型方法中最重要的部分。如果这个值未定义，构造函数将用原型方式继续定义对象的方法，然后把 Car._initialized 设置为 true。如果这个值定义了（它的值为 true 时，typeof 的值为 Boolean），那么就不再创建该方法。***简而言之，该方法使用标志（_initialized）来判断是否已给原型赋予了任何方法。***该方法只创建并赋值一次，传统的 OOP 开发者会高兴地发现，这段代码看起来更像其他语言中的类定义了.
+
+[Back to 3capter](#3)
+[Back to top](#top)
+
+### 4.采用哪种方式？
+
+<a href="4"></a>
+
+创建类/对象的方式有：
+
+- **原始方式**：new一个Object,再用对象名添加属性和函数，这可以看成是一个实例化的对象。
+- **工厂方式**：写一个函数，在一个函数里使用原始方式创建一个对象，然后返回对象。然后用一个变量去接收调用函数之后返回的对象。
+- **构造函数方式**：写一个函数，在函数体内用this添加属性和函数。创建对象用new。
+- **混合工厂方式**写一个函数，在函数体内用原始方法创建一个对象，然后返回对象。创建对象用new。
+- **原型方式**：写一个构造函数，在函数体内用函数名的prototype添加属性和函数。创建对象用new。
+- **混合的构造函数/原型方式**：写一个构造函数，在函数体内用thist添加属性，在函数外用 函数名的protoype添加函数。创建对象用new。
+- **动态原型方式**：写一个构造函数，在函数体内用thist添加属性，在函数体内用函数名的prototype添加函数。注意：函数是在this._initialized = true之前创建（if(typeof Obj._initialized == "underfined")）。创建对象用new。
+
+如前所述，目前使用最广泛的是***混合的构造函数/原型方式***。此外，***动态原始方法***也很流行，在功能上与构造函数/原型方式等价。可以采用这两种方式中的任何一种。不过不要单独使用经典的构造函数或原型方式，因为这样会给代码引入问题。
+
+[Back to top](#top)
+
+### 5.修改对象
+
+<a href="5"></a>
+
+#### 5.1.创建新方法
+
+可以用 prototype 属性为任何已有的类定义新方法，就像处理自己的类一样。
+
+```
+Number.prototype.toHexString = function() {
+  return this.toString(16);
+};
+```
+为本地对象添加新方法。
+如果想给 ECMAScript 中每个本地对象添加新方法，必须在 Object 对象的 prototype 属性上定义它。
+
+```
+Object.prototype.showValue = function () {
+  alert(this.valueOf());
+};
+
+var str = "hello";
+var iNum = 25;
+str.showValue();		//输出 "hello"
+iNum.showValue();		//输出 "25"
+```
+
+[Back to 5capter](#5)
+
+#### 5.2.重定义已有方法
+
+```
+Fnction.prototype.toString = function(){
+	return "Function code hidden";
+}
+
+function sayHi(){
+	alert("Hi");
+}
+
+alert(sayHi.toString());	//输出"Function code hidden"
+```
+以上程序覆盖了Function对象的toString()方法。
+
+直接用对象的prototype重写要重写的方法，原始方法将会被当作无用的存储单元，被回收程序回收掉，一般来说，在覆盖原始方法前，我们比较安全的做法是存储原始函数的指针，以便以后的使用。
+例如：
+
+```
+        Function.prototype.originToString = Function.prototype.toString;
+        Function.prototype.toString = function(){
+            if(this.originToString().length > 50)
+                return "Function code Hidden";
+            else
+                return this.originToString();
+        }
+
+        function sayHi() {
+            alert("Hi");
+        }
+
+        alert(sayHi.toString());    //Function code Hidden
+        alert(sayHi.originToString());  
+/*
+	输出:sayHi (){
+		alert("Hi");
+	}
+*/
+```
+
+[Back to 5capter](#5)
+
+#### 5.3.极晚绑定(Very Late Binding)
+
+>从技术上讲，根本不存在极晚绑定。本书采用该术语描述 ECMAScript 中的一种现象，即能够在对象实例化后再定义它的方法。例如：
+
+```
+var o = new Object();
+
+Object.prototype.sayHi = function () {
+  alert("hi");
+};
+
+o.sayHi();
+```
+
+在大多数程序设计语言中，必须在实例化对象之前定义对象的方法。这里，方法 sayHi() 是在创建 Object 类的一个实例之后来添加进来的。在传统语言中不仅没听说过这种操作，也没听说过该方法还会自动赋予 Object 对象的实例并能立即使用（接下来的一行）。
+
+***原始方法，工厂方法，混合工厂方法这些不就都是用了极晚绑定吗？***
+
+***注意：不建议使用极晚绑定方法，因为很难对其跟踪和记录。不过，还是应该了解这种可能。***
+
+[Back to 5capter](#5)
+[Back to top](#top)
