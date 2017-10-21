@@ -185,7 +185,7 @@ oCar.showColor();		//输出 "red"
 
 ### 3.定义类和对象
 
-<a href="#3"></a>
+<a href="three"></a>
 
 >使用域定义对象只是使用预定义对象只是面向对象语言的能力的一部分，它真正强大之处在于能够创建自己专用的类和对象。
 ECMAScript 拥有很多创建对象或类的方法。但是ECMScript里面没有创建类的明确定义，一切皆对象。我们也可以通过创建特殊对象来模拟类
@@ -207,6 +207,8 @@ ECMAScript 拥有很多创建对象或类的方法。但是ECMScript里面没有
 ```
 在上面的代码中，创建对象 car。然后给它设置几个属性：它的颜色是蓝色，有四个门，每加仑油可以跑 25 英里。最后一个属性实际上是指向函数的指针，意味着该属性是个方法。执行这段代码后，就可以使用对象 car。
 不过这里有一个问题，就是可能需要创建多个 car 的实例，那就又要重写许多重复的代码
+
+[Back to 3capter](#three)
 
 ##### 3.1.2解决方案:工厂方式
 
@@ -231,7 +233,7 @@ oCar2.showColor();		//red
 原始方式就是，先new一个Object对象，通过自定义动态添加属性和函数的方法来创建一个独一无二的对象.
 而工厂方式就是，写一个返回Object对象的函数createObject(arg0,aeg1...argN)，在函数体里面用原始方法创建一个对象，然后把这个对象返回(return)出去。需要新对象时，调用这个createObject(arg0,arg1,...,argN)，用一个变量来接收返回的对象。
 
-[Back to 3capter](#3)
+[Back to 3capter](#three)
 
 #####  3.1.3.在工厂函数外定义对象的方法
 
@@ -262,7 +264,7 @@ oCar2.showColor();		//输出 "blue"
 在函数 createCar() 之前定义了函数 showColor()。在 createCar() 内部，赋予对象一个指向已经存在的 showColor() 函数的指针。
 从功能上讲，这样解决了重复创建函数对象的问题；但是从语义上讲，该函数不太像是对象的方法。
 
-[Back to 3capter](#3)
+[Back to 3capter](#three)
 
 #### 3.2.构造函数方式
 
@@ -294,7 +296,7 @@ oCar2.showColor();		//输出 "blue"
 构造函数的缺点就是：同一个构造函数的对象实例之间无法共享属性或方法。
 每个方法都被重新创建了一次
 
-[Back to 3capter](#3)
+[Back to 3capter](#three)
 
 #### 3.3.混合工厂方式
 
@@ -320,7 +322,7 @@ car.showColor();
 由于在 Car() 构造函数内部调用了 new 运算符，所以将***忽略***第二个 new 运算符（位于构造函数之外），在构造函数内部创建的对象被传递回变量 car。
 这种方式在对象方法的内部管理方面与经典方式有着相同的问题。***强烈建议：除非万不得已，还是避免使用这种方式。***
 
-[Back to 3capter](#3)
+[Back to 3capter](#three)
 
 #### 3.4.原型方式
 
@@ -356,6 +358,8 @@ car.showColor();
         alert(oCar1 instanceof Car);	//输出 "true"
 ```
 
+[Back to 3capter](#three)
+
 ##### 3.5.原型方式出现的问题
 首先，这个构造函数没有参数。使用原型方式，不能通过给构造函数传递参数来初始化属性的值，因为 Car1 和 Car2 的 color 属性都等于 "blue"，doors 属性都等于 4，mpg 属性都等于 25。这意味着必须在对象创建后才能改变属性的默认值，这点很令人讨厌，但还没完。真正的问题出现在属性指向的是对象，而不是函数时。函数共享不会造成问题，但对象却很少被多个实例共享。请思考下面的例子：
 
@@ -383,7 +387,7 @@ alert(oCar2.drivers);	//输出 "Mike,John,Bill"
 上面的代码中，属性 drivers 是指向 Array 对象的指针，该数组中包含两个名字 "Mike" 和 "John"。由于 drivers 是引用值，Car 的两个实例都指向同一个数组。这意味着给 oCar1.drivers 添加值 "Bill"，在 oCar2.drivers 中也能看到。输出这两个指针中的任何一个，结果都是显示字符串 "Mike,John,Bill"。
 由于创建对象时有这么多问题，你一定会想，是否有种合理的创建对象的方法呢？答案是有，需要***联合使用构造函数和原型方式。***
 
-[Back to 3capter](#3)
+[Back to 3capter](#three)
 
 #### 3.6.混合的构造函数/原型方式
 
@@ -414,7 +418,7 @@ alert(oCar2.drivers);	//输出 "Mike,John"
 现在就更像创建一般对象了。***所有的非函数属性都在构造函数中创建，***意味着又能够用构造函数的参数赋予属性默认值了。因为只创建 showColor() 函数的一个实例，所以没有内存浪费。此外，给 oCar1 的 drivers 数组添加 "Bill" 值，不会影响到 oCar2 的数组，所以输出这些数组的值时，oCar1.drivers 显示的是 "Mike,John,Bill"，而 oCar2.drivers 显示的是 "Mike,John"。因为使用了原型方式，所以仍然能利用 instanceof 运算符来判断对象的类型。
 这种方式是 ECMAScript 采用的主要方式，它具有其他方式的特性，却没有他们的副作用。不过，有些开发者仍觉得这种方法不够完美。
 
-[Back to 3capter](#3)
+[Back to 3capter](#three)
 
 #### 3.7.动态原型方法
 
@@ -444,12 +448,12 @@ function Car(sColor,iDoors,iMpg) {
 
 直到检查 typeof Car._initialized 是否等于 "undefined" 之前，这个构造函数都未发生变化。这行代码是动态原型方法中最重要的部分。如果这个值未定义，构造函数将用原型方式继续定义对象的方法，然后把 Car._initialized 设置为 true。如果这个值定义了（它的值为 true 时，typeof 的值为 Boolean），那么就不再创建该方法。***简而言之，该方法使用标志（_initialized）来判断是否已给原型赋予了任何方法。***该方法只创建并赋值一次，传统的 OOP 开发者会高兴地发现，这段代码看起来更像其他语言中的类定义了.
 
-[Back to 3capter](#3)
+[Back to 3capter](#three)
 [Back to top](#top)
 
 ### 4.采用哪种方式？
 
-<a href="4"></a>
+<a href="four"></a>
 
 创建类/对象的方式有：
 
@@ -467,7 +471,7 @@ function Car(sColor,iDoors,iMpg) {
 
 ### 5.修改对象
 
-<a href="5"></a>
+<a href="five"></a>
 
 #### 5.1.创建新方法
 
@@ -492,7 +496,7 @@ str.showValue();		//输出 "hello"
 iNum.showValue();		//输出 "25"
 ```
 
-[Back to 5capter](#5)
+[Back to 5capter](#five)
 
 #### 5.2.重定义已有方法
 
@@ -534,7 +538,7 @@ alert(sayHi.toString());	//输出"Function code hidden"
 */
 ```
 
-[Back to 5capter](#5)
+[Back to 5capter](#five)
 
 #### 5.3.极晚绑定(Very Late Binding)
 
@@ -556,5 +560,5 @@ o.sayHi();
 
 ***注意：不建议使用极晚绑定方法，因为很难对其跟踪和记录。不过，还是应该了解这种可能。***
 
-[Back to 5capter](#5)
+[Back to 5capter](#five)
 [Back to top](#top)
