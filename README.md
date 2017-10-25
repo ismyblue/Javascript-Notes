@@ -1,6 +1,12 @@
 # Javascript-Note
 
-This is a notes of learning javascript.
-I will not regularly updated.
+##  面对对象编程
+0. 定义函数的方法
+1. 面对对象术语
+2. 作用域
+3. 定义类和对象
+4. 采用哪种方式
+5. 修改类/对象
+6. 继承的方式
 
-1. 面对对象编程.md
+
