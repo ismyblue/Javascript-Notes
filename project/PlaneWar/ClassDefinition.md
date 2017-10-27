@@ -38,9 +38,12 @@ width:int				//宽度
 height:int				//高度
 x_coor:int				//x坐标
 y_coor:int				//y坐标
+skin:String				//背景图片的url
+preId:String			//父元素的id
 
-show():void				//显示
-destory:void			//销毁
+init(String, String ,String, String, String, String):void	//初始化容器param,宽度， 高度， id， class，url，父元素id
+show():void			//显示
+destory():void			//销毁
 ```
 
 
@@ -50,6 +53,9 @@ destory:void			//销毁
 CPannel:面板类 extends CContainer
 informations[]:String	//通知信息
 buttons[]:CButton		//按钮
+
+showInfos():void		//显示消息
+showButtons():void	//显示按钮
 ```
 
 ## CSpirit 精灵类
