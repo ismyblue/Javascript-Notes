@@ -51,12 +51,11 @@ destory():void			//销毁
 面板类
 ```
 CPannel:面板类 extends CContainer
-informations[]:String	//通知信息
-buttons[]:CButton		//按钮
+informations[][]:String	//通知信息
 
-
+addInfo(String, String):void	//增加通知消息param: sTitle , sContent
+updateInfo(String, String):void	//修改通知消息param: sTitle , sContent
 showInfos():void		//显示消息
-showButtons():void	//显示按钮
 ```
 
 ## CSpirit 精灵类

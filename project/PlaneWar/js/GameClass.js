@@ -84,7 +84,7 @@ CInfoPannel.prototype.updateInfo = function(sTitle,updateContent){
 }
 
 //显示通知
-CInfoPannel.prototype.showInfo = function(){
+CInfoPannel.prototype.showInfos = function(){
     var pre = document.getElementById(this.id);
     var infoTable = document.createElement("table");
     infoTable.className = "table";
@@ -108,7 +108,7 @@ cp.init("40%","8%","table","","url(\"src/images/dialog_bottom.png\")","main");
 cp.addInfo("score:","2048");
 cp.addInfo("blood:","50");
 cp.show();
-cp.showInfo();/**/
+cp.showInfos();/**/
 
 
 //----------CPannel Class Definition Begin--------//

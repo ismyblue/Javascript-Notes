@@ -27,8 +27,8 @@
       <file leaf-file-name="GameClass.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/GameClass.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="42" column="46" lean-forward="false" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
+            <state relative-caret-position="291">
+              <caret line="86" column="31" lean-forward="false" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -158,12 +158,12 @@
       <option name="presentableId" value="Default" />
       <updated>1509027941211</updated>
       <workItem from="1509027942347" duration="1324000" />
-      <workItem from="1509086851114" duration="16565000" />
+      <workItem from="1509086851114" duration="16844000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17889000" />
+    <option name="totallyTimeSpent" value="18168000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-4" width="1366" height="772" extended-state="6" />
@@ -252,8 +252,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/GameClass.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="42" column="46" lean-forward="false" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
+        <state relative-caret-position="291">
+          <caret line="86" column="31" lean-forward="false" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="31" />
           <folding />
         </state>
       </provider>
