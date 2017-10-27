@@ -63,6 +63,7 @@ function CInfoPannel(){
 
 CInfoPannel.prototype = new CContainer();
 
+//增加通知信息
 CInfoPannel.prototype.addInfo = function(sTitle,sContent){
     var len = this.informations.length;
     this.informations[len] = new Array();
@@ -71,6 +72,7 @@ CInfoPannel.prototype.addInfo = function(sTitle,sContent){
 }
 
 
+//更新通知信息
 CInfoPannel.prototype.updateInfo = function(sTitle,updateContent){
     var len = this.informations.length;
     for(var i = 0;i < this.informations.length;i++){
@@ -81,25 +83,32 @@ CInfoPannel.prototype.updateInfo = function(sTitle,updateContent){
     }
 }
 
-CInfoPannel.prototype.showInfos = function(){
+//显示通知
+CInfoPannel.prototype.showInfo = function(){
     var pre = document.getElementById(this.id);
     var infoTable = document.createElement("table");
-    table.className = "table";
-    for(var i = 0;this.informations.length;i++){
+    infoTable.className = "table";
+    infoTable.style.textAlign = "center";
+    infoTable.style.fontWeight = "600";
+    infoTable.style.color = "red";
+    for(var i = 0;i < this.informations.length;i++){
         var tr = document.createElement("tr");
-        tr.className = "info";
         for(var j = 0;j < this.informations[i].length;j++){
             var td = document.createElement("td");
-
+            td.innerHTML = this.informations[i][j];
+            tr.appendChild(td);
         }
         infoTable.appendChild(tr);
     }
+    pre.appendChild(infoTable);
 }
 
-var cp = new CInforPannel();
-
-
-
+var cp = new CInfoPannel();
+cp.init("40%","8%","table","","url(\"src/images/dialog_bottom.png\")","main");
+cp.addInfo("score:","2048");
+cp.addInfo("blood:","50");
+cp.show();
+cp.showInfo();/**/
 
 
 //----------CPannel Class Definition Begin--------//

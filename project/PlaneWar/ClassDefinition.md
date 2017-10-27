@@ -47,12 +47,13 @@ destory():void			//销毁
 ```
 
 
-### CPannel 面板类 extends CContainer 
+### CInforPannel 面板类 extends CContainer 
 面板类
 ```
 CPannel:面板类 extends CContainer
 informations[]:String	//通知信息
 buttons[]:CButton		//按钮
+
 
 showInfos():void		//显示消息
 showButtons():void	//显示按钮

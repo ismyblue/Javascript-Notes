@@ -12,13 +12,26 @@
     </style>
 </head>
 <body>
-    <div class="container  panel panel-primary" >
+    <div class="container  panel panel-primary" id="container">
 
         <!--游戏区-->
         <div class="col-md-4 col-md-push-4 " id="main">
 
         </div>
     </div>
+<!--<script>
+    var table = document.createElement("table");
+    for(var i = 0;i < 3;i++){
+        var tr = document.createElement("tr");
+        for(var j = 0;j < 3;j++){
+            var td = document.createElement("td");
+            td.innerHTML = "conntent";
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
+    }
+    document.getElementById("container").appendChild(table);
+</script>-->
 </body>
 <script src="js/GameClass.js"></script>
 </html>
