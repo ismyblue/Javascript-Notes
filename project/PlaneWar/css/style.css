@@ -1,9 +1,18 @@
-div {
 
-    /*border: solid;*/
-    width: 100%;
+#main{
     height: 600px;
 }
 #main > *{
     position: absolute;
+    /* background-repeat: no-repeat;
+    background-size: 100% 100%;*/
+}
+
+.information{
+    display: block;
+    color: red;
+    font-weight: 600;
+    font-size: medium;
+    font-family: Ubuntu;
+
 }

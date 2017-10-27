@@ -47,8 +47,8 @@ destory():void			//销毁
 ```
 
 
-### CInforPannel 面板类 extends CContainer 
-面板类
+### CInforPannel 通知面板类 extends CContainer 
+通知面板类
 ```
 CPannel:面板类 extends CContainer
 informations[][]:String	//通知信息
@@ -56,6 +56,17 @@ informations[][]:String	//通知信息
 addInfo(String, String):void	//增加通知消息param: sTitle , sContent
 updateInfo(String, String):void	//修改通知消息param: sTitle , sContent
 showInfos():void		//显示消息
+```
+
+### CCtrlPannel 控制面板类 extends CContainer 
+控制面板类
+```
+CPannel:面板类 extends CContainer
+buttons[][]:String	//按钮
+
+addButton(String, String):void	//增加按钮param: sId , sValue
+updateButton(String, String):void	//修改通知消息param: param: sId , sValue
+showButtons():void		//显示按钮
 ```
 
 ## CSpirit 精灵类
