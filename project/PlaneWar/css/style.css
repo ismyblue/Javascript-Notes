@@ -1,13 +1,20 @@
-
+*{
+    margin: auto;
+}
 #main{
+    margin: auto;
+    width: 25% ;
     height: 600px;
+    position: relative;
+    border: salmon solid;
 }
 #main > *{
     position: absolute;
-    /* background-repeat: no-repeat;
-    background-size: 100% 100%;*/
+    background-repeat: no-repeat;
+    background-size: 100% 100%;/**/
+    border: salmon solid;
+    position: relative;
 }
-
 .information{
     display: block;
     color: red;

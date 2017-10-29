@@ -30,7 +30,7 @@ function CSpirit(){
             div.style.height = this.width;
             div.style.left = this.x_coor;
             div.style.top = this.y_coor;
-            div.style.backgroundImage = this.skin;
+            div.style.backgroundImage = "url(\"" + this.skin + "\")";
             var pre = document.getElementById(this.preId);
             pre.appendChild(div);
         };
@@ -67,18 +67,33 @@ CContainer.prototype = new CSpirit();
 //---------- CContainer Definition End--------//
 
 var con = new CContainer();
-con.init("gamediv","","url(\"src/images/gamebg_1.jpg\")","100%","100%","main");
+con.init("gamediv","","src/images/gamebg_1.jpg","100%","100%","main");
 con.show();
-
-
-
-
+/**/
 
 //----------CInformation Class Definition Begin--------//
+function CInformation(){
+    CSpirit.call(this);
+    this.title = null;
+    this.content = null;
+}
+CInformation.prototype = new CSpirit();
+CInformation.prototype.setInformation = function(sTitle, sContent){
+    this.title = sTitle;
+    this.content = sContent;
+}
+CInformation.prototype.showBody = CInformation.prototype.show;
+CInformation.prototype.show = function () {
+    this.showBody();
+
+}
 
 
 //----------CInformation Class Definition End--------//
 
+var s = new CSpirit();//CInformation();
+s.init("info","information","src/images/gamebg_2.jpg","30%","10%","gamediv");
+s.show();/**/
 
 
 
