@@ -4,22 +4,31 @@
 #main{
     margin: auto;
     width: 25% ;
-    height: 600px;
-    position: relative;
-    border: salmon solid;
+        height: 620px ;
+    position: relative
 }
-#main > *{
+#main  *{
     position: absolute;
     background-repeat: no-repeat;
     background-size: 100% 100%;/**/
-    border: salmon solid;
     position: relative;
 }
+
+.game-room{
+    background-image: url(../src/images/gamebg_1.jpg);
+}
+
 .information{
     display: block;
     color: red;
     font-weight: 600;
     font-size: medium;
     font-family: Ubuntu;
-
+    margin: 0px;
+    padding: 0 0 0 5px;
+}
+.information > *{
+    float: left;
+    margin: 0px;
+    padding: 0 0 0 5px;
 }

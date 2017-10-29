@@ -17,31 +17,28 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="9" column="12" lean-forward="false" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
+            <state relative-caret-position="522">
+              <caret line="29" column="7" lean-forward="true" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameClass.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/GameClass.js">
+      <file leaf-file-name="myGame.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/myGame.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="702">
-              <caret line="95" column="9" lean-forward="false" selection-start-line="95" selection-start-column="9" selection-end-line="95" selection-end-column="11" />
-              <folding>
-                <element signature="n#!!block;n#CSpirit#0" expanded="false" />
-                <element signature="n#!!block;n#CContainer#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="264">
+              <caret line="132" column="30" lean-forward="true" selection-start-line="132" selection-start-column="30" selection-end-line="132" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+            <state relative-caret-position="354">
+              <caret line="27" column="23" lean-forward="true" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -53,17 +50,25 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>\/\/\-\-\-\-\-\-\-\-\-\-CSpirit Class Definition Begin\-\-\-\-\-\-\-\-\/\/\nfunction CSpirit\(\)\{\n    this\.id \= null\;     \/\/css id\n    this\.class \= null\;  \/\/css class\n    this\.x_coor \= \&quot;0px\&quot;\;    \/\/x坐标\n    this\.y_coor \= \&quot;0px\&quot;\;    \/\/y坐标\n    this\.width \= null\;\n    this\.height \= null\;\n    this\.preId \= null\;\n    if\(\(typeof CSpirit\._defi_CSpirit\) \=\= \&quot;undefined\&quot;\)\{\n\n        CSpirit\.prototype\.max_x_coor \= 1000\;    \/\/最大x坐标\n        CSpirit\.prototype\.max_y_coor \= 1000\;    \/\/最大y坐标\n\n\}\n    CSpirit\.prototype\.init \= function\(sId\, sClass\, sSkin\, sWidth\, sHeight\, sPreId\)\{\n        this\.id \= sId\;     \/\/css id\n        this\.class \= sClass\;  \/\/css class\n        this\.skin \= sSkin\;   \/\/css skin\n        this\.width \= sWidth\;\n        this\.height \= sHeight\;\n        this\.preId \= sPreId\;\n    \}\n\n    CSpirit\.prototype\.show \= function\(\)\{\n        var div \= document\.createElement\(\&quot;div\&quot;\)\;\n        div\.id \= this\.id\;\n        div\.className \= this\.class\;\n        div\.style\.width \= this\.width\;\n        div\.style\.height \= this\.width\;\n        div\.style\.left \= this\.x_coor\;\n        div\.style\.top \= this\.y_coor\;\n        div\.style\.backgroundImage \= \&quot;url\(\\\&quot;\&quot; \+ this\.skin \+ \&quot;\\\&quot;\)\&quot;\;\n        var pre \= document\.getElementById\(this\.preId\)\;\n        pre\.appendChild\(div\)\;\n    \}\n\n\n    CSpirit\.prototype\.move \= function\(sX_coor\, sY_coor\)\{\n        var myself \= document\.getElementById\(this\.id\)\;\n        this\.x_coor \= sX_coor\;\n        this\.y_coor \= sY_coor\;\n        myself\.style\.left \= this\.x_coor\;\n        myself\.style\.top \= this\.y_coor\;\n    \}\n\n    CSpirit\.prototype\.destory \= function\(\)\{\n        var myself \= document\.getElementById\(this\.id\)\;\n        myself\.parentNode\.removeChild\(myself\)\;\n    \}\n\n\/\/\-\-\-\-\-\-\-\-\-\-CSpirit Class Definition End\-\-\-\-\-\-\-\-\/\/\n\n\n\n\/\/\-\-\-\-\-\-\-\-\-\-CContainer Class Definition Begin\-\-\-\-\-\-\-\-\/\/\nfunction CContainer\(\)\{\n   CSpirit\.call\(this\)\;\n   if\(\(typeof CContainer\._defi_CContainer\) \=\= \&quot;undefined\&quot;\)\{\n       CContainer\._defi_CContainer \= true\;\n   \}\n\}\nCContainer\.prototype \= new CSpirit\(\)\;\n\n\/\/\-\-\-\-\-\-\-\-\-\- CContainer Definition End\-\-\-\-\-\-\-\-\/\/\n\nvar con \= new CContainer\(\)\;\ncon\.init\(\&quot;gamediv\&quot;\,\&quot;\&quot;\,\&quot;src\/images\/gamebg_1\.jpg\&quot;\,\&quot;100\%\&quot;\,\&quot;100\%\&quot;\,\&quot;main\&quot;\)\;\ncon\.show\(\)\;\n\/\*\*\/\n\n\/\/\-\-\-\-\-\-\-\-\-\-CInformation Class Definition Begin\-\-\-\-\-\-\-\-\/\/\nfunction CInformation\(\)\{\n    CSpirit\.call\(this\)\;\n    this\.title \= null\;\n    this\.content \= null\;\n\}\nCInformation\.prototype \= new CSpirit\(\)\;\nCInformation\.prototype\.setInformation \= function\(sTitle\, sContent\)\{\n    this\.title \= sTitle\;\n    this\.content \= sContent\;\n\}\nCInformation\.prototype\.showBody \= CInformation\.prototype\.show\;\nCInformation\.prototype\.show \= function \(\) \{\n    this\.showBody\(\)\;\n\n\}\n\n\n\/\/\-\-\-\-\-\-\-\-\-\-CInformation Class Definition End\-\-\-\-\-\-\-\-\/\/\n\nvar s \= new CSpirit\(\)\;\/\/CInformation\(\)\;\ns\.init\(\&quot;info\&quot;\,\&quot;information\&quot;\,\&quot;src\/images\/gamebg_2\.jpg\&quot;\,\&quot;30\%\&quot;\,\&quot;10\%\&quot;\,\&quot;gamediv\&quot;\)\;\ns\.show\(\)\;\/\*\*\/\n\n\n\n\n</find>
+    </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/GameClass.js" />
+        <option value="$PROJECT_DIR$/js/old.js" />
+        <option value="$PROJECT_DIR$/js/class.js" />
+        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/css/style.css" />
+        <option value="$PROJECT_DIR$/js/myGame.js" />
       </list>
     </option>
   </component>
@@ -93,7 +98,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -117,16 +121,11 @@
               <item name="PlaneWar" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="PlaneWar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PlaneWar" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -134,6 +133,7 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -146,6 +146,14 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager" selected="Node.js.class.js">
+    <configuration name="class.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="class.js" working-dir="$PROJECT_DIR$/js" />
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Node.js.class.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -164,18 +172,21 @@
       <workItem from="1509086851114" duration="17801000" />
       <workItem from="1509110468000" duration="12632000" />
       <workItem from="1509254240839" duration="291000" />
+      <workItem from="1509281433915" duration="6763000" />
+      <workItem from="1509288258060" duration="2032000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32048000" />
+    <option name="totallyTimeSpent" value="40843000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-4" width="1368" height="780" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17721519" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17695168" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905295" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -187,7 +198,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985073" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -199,11 +210,35 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="28" column="9" lean-forward="false" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="23" lean-forward="true" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/class.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1548">
+          <caret line="86" column="41" lean-forward="true" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -212,17 +247,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/GameClass.js">
+    <entry file="file://$PROJECT_DIR$/js/GameClass.js" />
+    <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="95" column="9" lean-forward="false" selection-start-line="95" selection-start-column="9" selection-end-line="95" selection-end-column="11" />
-          <folding>
-            <element signature="n#!!block;n#CSpirit#0" expanded="false" />
-            <element signature="n#!!block;n#CContainer#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="180">
+          <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="12" lean-forward="false" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/GameClass.js" />
     <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -247,17 +289,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/GameClass.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2808">
-          <caret line="156" column="0" lean-forward="true" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#CSpirit#0" expanded="false" />
-            <element signature="n#!!block;n#CContainer#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/js/GameClass.js" />
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -266,17 +298,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/GameClass.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#CSpirit#0" expanded="false" />
-            <element signature="n#!!block;n#CContainer#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/js/GameClass.js" />
     <entry file="file://$PROJECT_DIR$/js/jquery.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
@@ -287,33 +309,40 @@
     <entry file="file://$PROJECT_DIR$/ClassDefinition.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
-          <caret line="82" column="32" lean-forward="false" selection-start-line="82" selection-start-column="32" selection-end-line="82" selection-end-column="32" />
+          <caret line="82" column="31" lean-forward="true" selection-start-line="82" selection-start-column="31" selection-end-line="82" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/GameClass.js" />
+    <entry file="file://$PROJECT_DIR$/js/old.js" />
+    <entry file="file://$PROJECT_DIR$/js/class.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="12" lean-forward="false" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
+        <state relative-caret-position="522">
+          <caret line="29" column="7" lean-forward="true" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/GameClass.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="95" column="9" lean-forward="false" selection-start-line="95" selection-start-column="9" selection-end-line="95" selection-end-column="11" />
-          <folding>
-            <element signature="n#!!block;n#CSpirit#0" expanded="false" />
-            <element signature="n#!!block;n#CContainer#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+        <state relative-caret-position="354">
+          <caret line="27" column="23" lean-forward="true" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/myGame.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="132" column="30" lean-forward="true" selection-start-line="132" selection-start-column="30" selection-end-line="132" selection-end-column="30" />
           <folding />
         </state>
       </provider>
