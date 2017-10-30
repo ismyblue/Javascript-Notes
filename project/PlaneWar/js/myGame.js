@@ -5,8 +5,8 @@ function CSpirit() {
     this.class = null;  //css class
     this.x_coor = "0px";    //x坐标
     this.y_coor = "0px";    //y坐标
-    this.width = "100%";
-    this.height = "100%";
+    this.width =  null;
+    this.height = null;
     this.preId = null;
 }
 
@@ -15,9 +15,12 @@ CSpirit.prototype.max_y_coor = 1000;    //最大y坐标
 
 //初始化，设置id,class,父容器id,初始宽度，初始高度
 CSpirit.prototype.init = function(sId, sClass, sPreId, sWidth, sHeight){
-    this.id = sId;     //css id
-    this.class = sClass;  //css class
-    this.preId = sPreId;
+    if(sId != null)
+        this.id = sId;     //css id
+    if(sClass != null)
+        this.class = sClass;  //css class
+    if(sPreId != null)
+        this.preId = sPreId;
     if(sWidth != null)
         this.width = sWidth;
     if(sHeight != null)
@@ -34,8 +37,11 @@ CSpirit.prototype.show = function(sPreId, sWidth, sHeight){
         this.height = sHeight;
     var div = document.createElement("div");
     div.id = this.id;
-    div.style.width = this.width;
-    div.style.height = this.height;
+    div.className = this.class;
+    if(this.width != null)
+        div.style.width = this.width;
+    if(this.height != null)
+        div.style.height = this.height;
     div.style.left = this.x_coor;
     div.style.top = this.y_coor;
     var pre = document.getElementById(this.preId);
@@ -64,7 +70,7 @@ CSpirit.prototype.destory = function(){
 //----------CContainer Class Definition Begin--------//容器类
 function CContainer(){
     CSpirit.call(this);
-    CContainer._defi_CContainer = true;
+
 }
 CContainer.prototype = new CSpirit();
 
@@ -81,17 +87,21 @@ function CInformation(){
     CSpirit.call(this);
     this.title = null;
     this.content = null;
+    this.width = "100%";
+    this.height = "100%";
+    this.class = "information";
 }
 CInformation.prototype = new CSpirit();
 //设置消息，为这一条消息设置标题和内容
 CInformation.prototype.setInformation = function(sTitle, sContent){
+
     this.title = sTitle;
     this.content = sContent;
 }
 
 CInformation.prototype.showBody = CSpirit.prototype.show;
 
-//显示一条消息，在preid的容器内显示宽为sWidth,sHeight的消息
+//显示一条消息，在preid的容器内显示宽为sWidth,sHeight的消息默认显示100%
 CInformation.prototype.show = function(sPreId, sWidth, sHeight){
     this.showBody(sPreId, sWidth, sHeight);
     var myself = document.getElementById(this.id);
@@ -107,7 +117,6 @@ CInformation.prototype.show = function(sPreId, sWidth, sHeight){
 //----------CInformation Class Definition End--------//
 
 
-
 //----------CInformationGroup Class Definition Begin--------//消息组类
 function CInformationGroup(){
     CContainer.call(this);
@@ -121,8 +130,8 @@ CInformationGroup.prototype.addInformation = function(sTitle, sContent,sId, sCla
     var len = this.infos.length;
     this.infos[len] = new CInformation();
     this.infos[len].init(sId, sClass, this.id, sWidth, sHeight);
-    this.infos[len].title = sTitle;
-    this.infos[len].content = sContent;
+    this.infos[len].setInformation(sTitle,sContent);
+
 }
 
 //更名父类的show函数为showBody
@@ -132,24 +141,33 @@ CInformationGroup.prototype.showBody = CContainer.prototype.show;
 //一条消息包含titile和content，消息组有多条消息
 CInformationGroup.prototype.show = function (iNum, sPreId, sWidth, sHeight) {
     this.showBody(sPreId, sWidth, sHeight);
-    var nowWidth = this.width;
-    var nowHeight = this.height;
+    var nowWidth = "100%";
+    var nowHeight = "100%";
     var num = 1;
-    if(sNum != null)
-        num = sNum;
+    if(iNum != null)
+        num = iNum;
     nowWidth =  (parseInt(nowWidth)/num).toString() + "%";
-    var t = this.infos.length/num;
-    if(t > parseInt(t))
-        t = parseInt(t) + 1;
+    var cols = this.infos.length/num;
+    if(cols > parseInt(cols))
+        cols = parseInt(cols) + 1;
     else
-        t = parseInt(t);
-    nowHeight = (nowHeight/t).toString() + "%";
+        cols = parseInt(cols);
+    nowHeight = (parseInt(nowHeight)/cols).toString() + "%";
     var myself = document.getElementById(this.id);
     for(var i = 0;i < this.infos.length;i++) {
         this.infos[i].show(this.id, nowWidth, nowHeight);
     }
 }
 //----------CInformationGroup Class Definition End--------//
+
+var infog = new CInformationGroup();
+infog.init("infog","information-group","gamediv");
+infog.addInformation("score","2048","score-");
+infog.addInformation("score","2048","score-nfo");
+infog.addInformation("score","2048","score-fo");
+infog.addInformation("blood","68","blood");
+infog.show(2,"gamediv","100%","10%");
+/**/
 
 
 
@@ -168,7 +186,7 @@ CButton.prototype.setButton = function(sValue, sFunctionName) {
 }
 
 CButton.prototype.init = function(){
-    
+
 }
 
 //CButton.prototype.showBody = CSpirit.prototype.show;
@@ -180,7 +198,7 @@ CButton.prototype.show = function(sPreId, sWidth, sHeight){
 
 
 
-
+/*
 //------------CButtonGroup Class Definition Begin--------------//
 //按钮组类
 function CButtonGroup(){
@@ -208,9 +226,9 @@ CButtonGroup.prototype.show = function (iNum) {
     if(sNum != null)
         num = iNum;
     var myself = document.getElementById(this.id);
-    for(var i = 0;i < this.infos.length;i++) {
+    for(var i = 0;i < this.buttons.length;i++) {
         var div = document.createElement("div");
-        if(this.infos[i].class != null)
+        if(this.buttons[i].class != null)
             div.className = this.infos[i].class;
         div.style.width = (100/iNum).toString() + "%";
         var label = document.createElement("label");
@@ -261,5 +279,5 @@ var panel = new CPannel();
 panel.init("panel", "panel-info", "gamediv", "100%", "10%");
 panel.addInfo("score","1205");
 panel.addInfo("blood","18");
-panel.show();
+panel.show();*/
 
