@@ -4,19 +4,22 @@
 #main{
     margin: auto;
     width: 25% ;
-        height: 620px ;
+    height: 620px ;
     position: relative
 }
 #main  > *{
     position: absolute;
     background-repeat: no-repeat;
     background-size: 100% 100%;/**/
+    overflow: hidden;
 }
+
 
 .game-room{
     width: 100%;
     height: 100%;
-    background-image: url(../src/images/gamebg_1.jpg);
+    position: absolute;
+  /*  background-image: url(../src/images/level6_bg_3.jpg);*/
 }
 
 .information{
@@ -41,6 +44,50 @@
     background-image: url(../src/images/dialog_2.png);
     background-size: 100% 100%;
 }
+
 .information-group > div{
     float: left;
+}
+
+.btn-attack{
+    border: none;
+    background-size: 100% 100%;/**/
+    background: transparent;
+    background-image: url(../src/images/attack_button_normal.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.btn-attack:active{
+    background-image: url(../src/images/attack_button_press.png);
+}
+
+.btn-group > input{
+    float: left;
+}
+
+.game-map {
+    width: 100%;
+    height: 100%;
+    border: solid red;
+    position: absolute;
+}
+
+.game-map > *{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.map1{
+    background-image: url(../src/images/gamebg_1.jpg);
+    /*background-position-y: -520px;*/
+    border: solid red;
+}
+
+.map2{
+    border: solid red;
+    /*background-position-y: 100px;*/
+    top: 100%;
+    background-image: url(../src/images/gamebg_2.jpg);
 }

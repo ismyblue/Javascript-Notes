@@ -160,14 +160,14 @@ CInformationGroup.prototype.show = function (iNum, sPreId, sWidth, sHeight) {
 }
 //----------CInformationGroup Class Definition End--------//
 
-var infog = new CInformationGroup();
+/*var infog = new CInformationGroup();
 infog.init("infog","information-group","gamediv");
 infog.addInformation("score","2048","score-");
 infog.addInformation("score","2048","score-nfo");
 infog.addInformation("score","2048","score-fo");
 infog.addInformation("blood","68","blood");
 infog.show(2,"gamediv","100%","10%");
-/**/
+*/
 
 
 
@@ -177,28 +177,51 @@ function CButton(){
     CSpirit.call(this);
     this.value = null;
     this.functionName = null;
+    this.width = "100%";
+    this.height = "100%";
+    this.class = "btn btn-primary";
 }
 CButton.prototype = new CSpirit();
-//设置一按钮，按钮名字，按钮的函数名
-CButton.prototype.setButton = function(sValue, sFunctionName) {
+//设置消息，为这一条消息设置标题和内容
+CButton.prototype.setButton = function(sValue, sFunctionName){
     this.value = sValue;
     this.functionName = sFunctionName;
 }
 
-CButton.prototype.init = function(){
 
-}
-
-//CButton.prototype.showBody = CSpirit.prototype.show;
-CButton.prototype.show = function(sPreId, sWidth, sHeight){
-
+//显示一个button，在preid的容器内显示宽为sWidth,sHeight的消息默认显示100%
+CButton.prototype.show = function(sPreId, sWidth, sHeight) {
+    if (sPreId != null)
+        this.preId = sPreId;
+    if(sWidth != null)
+        this.width = sWidth;
+    if(sHeight != null)
+        this.height = sHeight;
+    var pre = document.getElementById(this.preId);
+    var input = document.createElement("input");
+    input.id = this.id;
+    input.type = "button";
+    if (this.class != null)
+        input.className = this.class ;
+    if(this.width != null)
+        input.style.width = this.width;
+    if(this.height != null)
+        input.style.height = this.height;
+    input.value = this.value;
+    input.onclick = this.functionName;
+    pre.appendChild(input);
 }
 
 //------------CButton Class Definition Begin--------------//
 
+/*var bu = new CButton();
+bu.init("btn-test","btn-attack","gamediv");
+bu.setButton("","alert");
+bu.show("gamediv","50%","8%");
+bu.move("25%","80%");
+*/
 
 
-/*
 //------------CButtonGroup Class Definition Begin--------------//
 //按钮组类
 function CButtonGroup(){
@@ -212,72 +235,99 @@ CButtonGroup.prototype.addButton = function(sValue, sFunctionName, sId, sClass, 
     var len = this.buttons.length;
     this.buttons[len] = new CButton();
     this.buttons[len].init(sId, sClass, this.id, sWidth, sHeight);
-    this.buttons[len].value = sValue;
-    this.buttons[len].functionName = sFunctionName;
+    this.buttons[len].setButton(sValue, sFunctionName);
 }
 
 //更名父类的show函数为showBody
 CButtonGroup.prototype.showBody = CSpirit.prototype.show;
 
-//在按钮组显示消息，sNum代表一列显示多少个按钮,不传sWidth和sHeight默认是100%
-CButtonGroup.prototype.show = function (iNum) {
-    this.showBody(sWidth, sHeight);
+//在按钮组显示按钮，sNum代表一列显示多少个按钮,不传sWidth和sHeight默认是100%
+CButtonGroup.prototype.show = function (iNum, sPreId, sWidth, sHeight) {
+    this.showBody(sPreId, sWidth, sHeight);
+    var nowWidth = "100%";
+    var nowHeight = "100%";
     var num = 1;
-    if(sNum != null)
+    if(iNum != null)
         num = iNum;
+    nowWidth =  (parseInt(nowWidth)/num).toString() + "%";
+    var cols = this.buttons.length/num;
+    if(cols > parseInt(cols))
+        cols = parseInt(cols) + 1;
+    else
+        cols = parseInt(cols);
+    nowHeight = (parseInt(nowHeight)/cols).toString() + "%";
     var myself = document.getElementById(this.id);
     for(var i = 0;i < this.buttons.length;i++) {
-        var div = document.createElement("div");
-        if(this.buttons[i].class != null)
-            div.className = this.infos[i].class;
-        div.style.width = (100/iNum).toString() + "%";
-        var label = document.createElement("label");
-        label.className = "text-primary";
-        label.innerHTML = this.infos[i].title;
-        var p = document.createElement("p");
-        p.className = "text-danger";
-        p.innerHTML = this.infos[i].content;
-        div.appendChild(label);
-        div.appendChild(p);
-        myself.appendChild(div);
+        this.buttons[i].show(this.id, nowWidth, nowHeight);
     }
 }
 //------------CButtonGroup Class Definition End--------------//
+/*var btng = new CButtonGroup();
+btng.init("btng","btn-group","gamediv");
+btng.addButton("","","btn1","btn-attack");
+btng.addButton("","","btn2","btn-attack");
+btng.addButton("","","btn3","btn-attack");
+btng.addButton("","","btn4","btn-attack");
+btng.show(2,"gamediv","100%","20%");
+btng.move("0%","60%");
+*/
 
 
+//---------------CGameMap Class Definition Begin--------------//
 
-//----------CPanel Class Definition Begin--------//
-function CPannel(){
-    CContainer.call(this);
-    this.infomationgroup = null;
-    this.buttongroup = null;
+function CGameMap(){
+    CSpirit.call(this);
+    this.map1 = new CSpirit();
+    this.map2 = new CSpirit();
+    this.map1.width = "100%";
+    this.map1.height = "100%";
+    this.map2.width = "100%";
+    this.map2.height = "100%";
 }
 
-CPannel.prototype = new CContainer();
+CGameMap.prototype = new CSpirit();
 
-CPannel.prototype.addInfo = function(sTitle, sContent){
-    var len = this.infos.length;
-    var info = new CInformation();
-    info.init(this.id + len.toString(), "information", this.id);
-    info.setInformation(sTitle, sContent);
-    this.infos.push(info);
+CGameMap.prototype.setMap = function(sId1, sId2, sClass1, sClass2){
+    this.map1.init(sId1,sClass1,this.id);
+    this.map2.init(sId2,sClass2,this.id);
 }
 
-CPannel.prototype.showBody = CPannel.prototype.show;
-
-CPannel.prototype.show = function(sWidth, sHeight){
-    this.showBody(sWidth, sHeight);
-    var myself = document.getElementById(this.id);
-    var h = this.infos.length;
-    for(var i = 0 ;i < this.infos.length;i++){
-        this.infos[i].show(null,(100/h).toString() + "%");
-    }
+CGameMap.prototype.showBody = CSpirit.prototype.show;
+CGameMap.prototype.show = function(sPreId, sWidth, sHeight){
+    this.showBody(sPreId, sWidth, sHeight);
+    this.map1.show();
+    this.map2.show();
 }
 
-//----------CPanel Class Definition End--------//
-var panel = new CPannel();
-panel.init("panel", "panel-info", "gamediv", "100%", "10%");
-panel.addInfo("score","1205");
-panel.addInfo("blood","18");
-panel.show();*/
+CGameMap.prototype.action = function(iTime){
+    var mp1 = document.getElementById(this.map1.id);
+    var mp2 = document.getElementById(this.map2.id);
+    var top = -100;
+    var bottom = 0;
+    var i = 0;
+    window.setInterval(
+        function a(){
+            if(i < 100) {
+                i += 0.5;
+                mp1.style.top = (top + i).toString() + "%";
+                mp2.style.top = (bottom + i).toString() + "%";
+            }
+            if(i >= 100){
+                i = 0;
+                var t = top;
+                top = bottom;
+                bottom = t;
+            }
 
+
+        },iTime);
+
+}
+
+//---------------CGameMap Class Definition End--------------//
+var mp = new CGameMap();
+mp.init("mp","game-map","gamediv");
+mp.setMap("mp1","mp2","map1","map2");
+mp.show(null,"100%","100%");
+mp.action(10);
+/**/
