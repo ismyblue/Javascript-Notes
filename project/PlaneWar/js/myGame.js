@@ -283,6 +283,13 @@ function CGameMap(){
     this.map1.height = "100%";
     this.map2.width = "100%";
     this.map2.height = "100%";
+    this.timeName = null;       //定时器
+    this.domEle1 = null;        //map1和map2在dom中的引用
+    this.domEle2 = null;
+    this.moveLength = 0.05;     //游戏地图map的移动步长;
+
+    this.map1top = -100;        //第一张图的top初始位置的值
+    this.map2top = 0;        //第二张图的top初始位置的值
 }
 
 CGameMap.prototype = new CSpirit();
@@ -293,35 +300,42 @@ CGameMap.prototype.setMap = function(sId1, sId2, sClass1, sClass2){
 }
 
 CGameMap.prototype.showBody = CSpirit.prototype.show;
+
+//显示地图
 CGameMap.prototype.show = function(sPreId, sWidth, sHeight){
     this.showBody(sPreId, sWidth, sHeight);
     this.map1.show();
     this.map2.show();
+    this.domEle1 = document.getElementById(this.map1.id);
+    this.domEle2 = document.getElementById(this.map2.id);
 }
 
-CGameMap.prototype.action = function(iTime){
-    var mp1 = document.getElementById(this.map1.id);
-    var mp2 = document.getElementById(this.map2.id);
-    var top = -100;
-    var bottom = 0;
-    var i = 0;
-    window.setInterval(
-        function a(){
-            if(i < 100) {
-                i += 0.5;
-                mp1.style.top = (top + i).toString() + "%";
-                mp2.style.top = (bottom + i).toString() + "%";
-            }
-            if(i >= 100){
-                i = 0;
-                var t = top;
-                top = bottom;
-                bottom = t;
-            }
+CGameMap.prototype.moveBody = CSpirit.prototype.move;
 
 
-        },iTime);
+//游戏地图的两张基准地图开始交替移动到屏幕中间
+CGameMap.prototype.move = function (){
+    alert(this.moveLength);
+    if(this.map1top > 100){
+        this.map1top = -100;
+    }
+    if(this.map2top > 100){
+        this.map2top = -100;
+    }
+    this.map1top += this.moveLength;
+    this.map2top += this.moveLength;
+    this.domEle1.style.top = this.map1top.toString() + "%";
+    this.domEle2.style.top = this.map2top.toString() + "%";
+}
 
+//地图开始运动
+CGameMap.prototype.actionStart = function(iTime){
+    this.timeName = window.setInterval("CGameMap.prototype.move()",iTime);
+}
+
+//地图停止运动
+CGameMap.prototype.actionEnd = function(){
+    clearInterval(this.timeName);
 }
 
 //---------------CGameMap Class Definition End--------------//
@@ -329,5 +343,5 @@ var mp = new CGameMap();
 mp.init("mp","game-map","gamediv");
 mp.setMap("mp1","mp2","map1","map2");
 mp.show(null,"100%","100%");
-mp.action(10);
-/**/
+
+
