@@ -78,10 +78,22 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
-.game-map-map1{
+.game-map-map1 {
+    top: -100%;
     background-image: url(../src/images/gamebg_1.jpg);
 }
 
 .game-map-map2{
+    top: 0%;
     background-image: url(../src/images/gamebg_2.jpg);
 }
+
+.fly{
+    position: absolute;
+    border: red solid;
+    background: url(../src/images/enemy_10.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+

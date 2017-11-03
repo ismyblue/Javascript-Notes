@@ -6,8 +6,8 @@ function CSpirit() {
     this.x_coor = "0px";    //x坐标
     this.y_coor = "0px";    //y坐标
     this.width =  null;
-    this.height = null;
-    this.preId = null;
+    this.height = "100%";
+    this.preId = "100%";
 }
 
 CSpirit.prototype.max_x_coor = 1000;    //最大x坐标
@@ -287,8 +287,6 @@ function CGameMap(){
 
     this.stepLength = 0.05;     //游戏地图map的移动步长;
 
-    this.map1top = -100;        //第一张图的top初始位置的值
-    this.map2top = 0;        //第二张图的top初始位置的值
 }
 
 CGameMap.prototype = new CSpirit();
@@ -306,8 +304,6 @@ CGameMap.prototype.show = function(sPreId, sWidth, sHeight){
     this.map1.show();
     this.map2.show();
     this.map1.move("0%","-100%");
-    this.domEle1 = document.getElementById(this.map1.id);
-    this.domEle2 = document.getElementById(this.map2.id);
 }
 
 CGameMap.prototype.moveBody = CSpirit.prototype.move;
@@ -359,4 +355,71 @@ mp.setMap("bgmap-1","bgmap-2","game-map-map1","game-map-map2");
 mp.show(null,"100%","100%");
 mp.actionStart(10);
 //mp.actionEnd();
+
+
+
+
+//---------------CFly Class Definition Begin--------------//
+
+function CFly(){
+    CSpirit.call(this);
+    this.timeName = null;       //定时器
+    this.stepLength = 1;     //飞行器的移动步长;
+}
+
+CFly.prototype = new CSpirit();
+
+
+//飞行器飞行一步 map1Id飞行器id  dir:方向  stepLength步长 像素单位px
+var flyMove = function (sFlyId, sDir, stepLength){
+    var flyEle = document.getElementById(sFlyId);
+    switch (sDir){
+        case "up":
+            flyEle.style.top = (parseInt(flyEle.style.top) - stepLength).toString() + "px";
+            break;
+        case "down":
+            //alert(parseFloat(flyEle.style.top) + " " + stepLength);
+            flyEle.style.top = (parseFloat(flyEle.style.top) + stepLength).toString() + "px";
+            //alert(parseFloat(flyEle.style.top));
+            break;
+        case "left":
+            flyEle.style.left = (flyEle.style.top.replace(/[^0-9]/ig,"") - stepLength).toString() + "px";
+            break;
+        case "right":
+            flyEle.style.left = (flyEle.style.top.replace(/[^0-9]/ig,"") + stepLength).toString() + "px";
+            break;
+        default :break;
+    }
+}
+
+
+//飞行器开始运动 //dir,运动方向//每iTime移动一步，连续不断的运动
+CFly.prototype.actionStart = function(sDir, iTime){
+    var flyId = this.id;
+    var stepLength = this.stepLength;
+    var stop = this.timeName;
+    this.timeName = window.setInterval(
+        function () {
+            flyMove(flyId, sDir, stepLength);
+
+        }
+        ,iTime);
+}
+
+//地图停止运动
+CFly.prototype.actionEnd = function(){
+
+    clearInterval(this.timeName);
+}
+
+//----------CFly Class Definition End---------------------//
+
+/**/
+var fly = new CFly();
+fly.init("flyid","fly","gamediv","80px","70px");
+fly.show();
+fly.move("100px","100px");
+fly.actionStart("down",5);
+
+window.setInterval("if(parseInt(document.getElementById(fly.id).style.top) >= 500 )fly.actionEnd();", 1);
 
