@@ -378,15 +378,13 @@ var flyMove = function (sFlyId, sDir, stepLength){
             flyEle.style.top = (parseInt(flyEle.style.top) - stepLength).toString() + "px";
             break;
         case "down":
-            //alert(parseFloat(flyEle.style.top) + " " + stepLength);
             flyEle.style.top = (parseFloat(flyEle.style.top) + stepLength).toString() + "px";
-            //alert(parseFloat(flyEle.style.top));
             break;
         case "left":
-            flyEle.style.left = (flyEle.style.top.replace(/[^0-9]/ig,"") - stepLength).toString() + "px";
+            flyEle.style.left = (parseFloat(flyEle.style.left) - stepLength).toString() + "px";
             break;
         case "right":
-            flyEle.style.left = (flyEle.style.top.replace(/[^0-9]/ig,"") + stepLength).toString() + "px";
+            flyEle.style.left = (parseFloat(flyEle.style.left) + stepLength).toString() + "px";
             break;
         default :break;
     }
@@ -406,9 +404,8 @@ CFly.prototype.actionStart = function(sDir, iTime){
         ,iTime);
 }
 
-//地图停止运动
+//飞行器停止运动
 CFly.prototype.actionEnd = function(){
-
     clearInterval(this.timeName);
 }
 
@@ -423,3 +420,68 @@ fly.actionStart("down",5);
 
 window.setInterval("if(parseInt(document.getElementById(fly.id).style.top) >= 500 )fly.actionEnd();", 1);
 
+
+//-------------CBuleet Class Definition Begin-------------------//
+
+function CBuleet(iDamage){
+    CFly.call(this);
+    this.stepLength = 2;     //子弹的移动步长;px
+
+    this.damage = iDamage;       //子弹伤害值
+}
+
+CBuleet.prototype = new CFly();
+
+//-------------CBuleet Class Definition End-------------------//
+
+
+
+//-------------CPlane Class Definition Begin-------------------//
+
+function CPlane(){
+    CFly.call(this);
+    this.stepLength = 1;     //飞机的移动步长;
+
+    this.bloodVloume = 100; //飞机血量
+    this.direction = null;  //飞机和子弹方向
+    this.bulletType = null; //子弹类型
+    this.bulletNumber = 1;  //每次发射子弹数量
+    this.score = 0;         //飞机得分
+    this.damage = 50;       //飞机的总伤害值
+    this.bulletAllNumber    //总共发射的数量
+}
+
+CPlane.prototype = new CFly();
+
+//创建子弹，子弹类型class，子弹个数，iDamage伤害值，飞机宽度，飞机的style.top位置
+var createBullet = function (sBulletType, iBulletNumer, iDamage, sPlaneWidth, sPlanePos) {
+    var bullets = new CBuleet(iDamage)[iBulletNumer];
+    for(var i = 0 ; i < iBulletNumer;i++){
+
+    }
+
+}
+
+//发射子弹 iTime//发射子弹的时间间隔
+CPlane.prototype.fire = function (iTime) {
+
+    var sBulletType = this.bulletType;
+    var iBulletNumer = this.bulletNumber;
+    var iDamage = this.damage;
+    var sPlaneWidth = this.width;
+    var sPlanePos = document.getElementById(this.id).style.top;
+
+    window.setInterval(
+        function (){
+            createBullet(sBulletType, iBulletNumer, sPlaneWidth, sPlanePos);
+        }
+        ,iTime);
+}
+
+//-------------CPlane Class Definition End-------------------//
+
+var plane = new CPlane();
+plane.init("plane","hero-plane","gamediv","80px","55px");
+plane.show();
+plane.move("200px","500px");
+plane.fire(100);

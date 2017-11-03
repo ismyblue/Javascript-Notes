@@ -97,3 +97,11 @@
 }
 
 
+.hero-plane{
+    position: absolute;
+    border: red solid;
+    background: url(../src/images/img_plane_main.png);
+    background-repeat: no-repeat;
+    background-size:  300px;
+    background-position: 0px -50px;
+}
