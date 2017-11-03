@@ -284,9 +284,8 @@ function CGameMap(){
     this.map2.width = "100%";
     this.map2.height = "100%";
     this.timeName = null;       //定时器
-    this.domEle1 = null;        //map1和map2在dom中的引用
-    this.domEle2 = null;
-    this.moveLength = 0.05;     //游戏地图map的移动步长;
+
+    this.stepLength = 0.05;     //游戏地图map的移动步长;
 
     this.map1top = -100;        //第一张图的top初始位置的值
     this.map2top = 0;        //第二张图的top初始位置的值
@@ -306,6 +305,7 @@ CGameMap.prototype.show = function(sPreId, sWidth, sHeight){
     this.showBody(sPreId, sWidth, sHeight);
     this.map1.show();
     this.map2.show();
+    this.map1.move("0%","-100%");
     this.domEle1 = document.getElementById(this.map1.id);
     this.domEle2 = document.getElementById(this.map2.id);
 }
@@ -313,24 +313,38 @@ CGameMap.prototype.show = function(sPreId, sWidth, sHeight){
 CGameMap.prototype.moveBody = CSpirit.prototype.move;
 
 
-//游戏地图的两张基准地图开始交替移动到屏幕中间
-CGameMap.prototype.move = function (){
-    alert(this.moveLength);
-    if(this.map1top > 100){
-        this.map1top = -100;
+//游戏地图的两张基准地图开始交替移动到屏幕中间 stepLength步长
+var mapMove = function (map1Id, map2Id, stepLength){
+    var domEle1 = document.getElementById(map1Id);
+    var domEle2 = document.getElementById(map2Id);
+    var map1top = parseFloat(domEle1.style.top);
+    var map2top = parseFloat(domEle2.style.top);
+
+    if(map1top >= 100){
+        map1top = -100;
     }
-    if(this.map2top > 100){
-        this.map2top = -100;
+    if(map2top >= 100){
+        map2top = -100;
     }
-    this.map1top += this.moveLength;
-    this.map2top += this.moveLength;
-    this.domEle1.style.top = this.map1top.toString() + "%";
-    this.domEle2.style.top = this.map2top.toString() + "%";
+    map1top += stepLength;
+    map2top += stepLength;
+
+    domEle1.style.top = map1top.toString() + "%";
+    domEle2.style.top = map2top.toString() + "%";
 }
+
 
 //地图开始运动
 CGameMap.prototype.actionStart = function(iTime){
-    this.timeName = window.setInterval("CGameMap.prototype.move()",iTime);
+    var map1Id = this.map1.id;
+    var map2Id = this.map2.id;
+    var stepLength = this.stepLength;
+
+    this.timeName = window.setInterval(
+        function () {
+            mapMove(map1Id, map2Id, stepLength);
+        }
+        ,iTime);
 }
 
 //地图停止运动
@@ -340,8 +354,9 @@ CGameMap.prototype.actionEnd = function(){
 
 //---------------CGameMap Class Definition End--------------//
 var mp = new CGameMap();
-mp.init("mp","game-map","gamediv");
-mp.setMap("mp1","mp2","map1","map2");
+mp.init("bgmap","game-map","gamediv");
+mp.setMap("bgmap-1","bgmap-2","game-map-map1","game-map-map2");
 mp.show(null,"100%","100%");
-
+mp.actionStart(10);
+//mp.actionEnd();
 
