@@ -262,7 +262,8 @@ CButtonGroup.prototype.show = function (iNum, sPreId, sWidth, sHeight) {
     }
 }
 //------------CButtonGroup Class Definition End--------------//
-/*var btng = new CButtonGroup();
+
+var btng = new CButtonGroup();
 btng.init("btng","btn-group","gamediv");
 btng.addButton("","","btn1","btn-attack");
 btng.addButton("","","btn2","btn-attack");
@@ -270,7 +271,7 @@ btng.addButton("","","btn3","btn-attack");
 btng.addButton("","","btn4","btn-attack");
 btng.show(2,"gamediv","100%","20%");
 btng.move("0%","60%");
-*/
+/**/
 
 
 //---------------CGameMap Class Definition Begin--------------//
@@ -440,7 +441,7 @@ CBuleet.prototype = new CFly();
 
 function CPlane(){
     CFly.call(this);
-    this.stepLength = 1;     //飞机的移动步长;
+    this.stepLength = 1;     //飞机的移动步长;px
 
     this.bloodVloume = 100; //飞机血量
     this.direction = null;  //飞机和子弹方向
@@ -448,17 +449,27 @@ function CPlane(){
     this.bulletNumber = 1;  //每次发射子弹数量
     this.score = 0;         //飞机得分
     this.damage = 50;       //飞机的总伤害值
-    this.bulletAllNumber    //总共发射的数量
+    //this.bulletAllNumber = 0;    //总共发射的数量
 }
 
 CPlane.prototype = new CFly();
 
-//创建子弹，子弹类型class，子弹个数，iDamage伤害值，飞机宽度，飞机的style.top位置
-var createBullet = function (sBulletType, iBulletNumer, iDamage, sPlaneWidth, sPlanePos) {
-    var bullets = new CBuleet(iDamage)[iBulletNumer];
-    for(var i = 0 ; i < iBulletNumer;i++){
+CPlane.prototype.bulletAllNumber = 0;
 
+//创建子弹，子弹类型class，子弹个数，iDamage伤害值，飞机宽度，飞机的style.top位置和style.left
+var createBullet = function (sBulletType, iBulletNumer, iDamage, sPlaneWidth, sPlaneTop, sPlaneleft) {
+    var bullets = new Array(iBulletNumer);
+    for(var i = 0 ;i < iBulletNumer;i++)
+        bullets[i] = new CBuleet(iDamage);
+
+    for(var i = 0 ; i < iBulletNumer;i++){
+        bullets[i].init(CPlane.prototype.bulletAllNumber.toString(),"hreo-bullet","bullets-box","20px","40px");
+        CPlane.prototype.bulletAllNumber++;
+        bullets[i].show();
+        bullets[i].move(parseInt(sPlaneleft) + i*parseInt(sPlaneWidth)/iBulletNumer  + parseInt(sPlaneWidth)/iBulletNumer/2 - 10 + "px",parseInt(sPlaneTop) - 40 + "px");
+        bullets[i].actionStart("up",10);
     }
+
 
 }
 
@@ -469,11 +480,12 @@ CPlane.prototype.fire = function (iTime) {
     var iBulletNumer = this.bulletNumber;
     var iDamage = this.damage;
     var sPlaneWidth = this.width;
-    var sPlanePos = document.getElementById(this.id).style.top;
+    var sPlaneTop = document.getElementById(this.id).style.top;
+    var sPlaneleft = document.getElementById(this.id).style.left;
 
     window.setInterval(
-        function (){
-            createBullet(sBulletType, iBulletNumer, sPlaneWidth, sPlanePos);
+      function (){
+            createBullet(sBulletType, iBulletNumer, iDamage, sPlaneWidth, sPlaneTop, sPlaneleft);
         }
         ,iTime);
 }
@@ -481,7 +493,26 @@ CPlane.prototype.fire = function (iTime) {
 //-------------CPlane Class Definition End-------------------//
 
 var plane = new CPlane();
-plane.init("plane","hero-plane","gamediv","80px","55px");
+plane.init("plane","hero-plane","gamediv","75px","50px");
+plane.bulletNumber = 2;
 plane.show();
 plane.move("200px","500px");
-plane.fire(100);
+plane.fire(200);
+
+//---------clear bullets---------//
+
+window.setInterval(
+    function(){
+        var bulles_box = document.getElementById("bullets-box");
+        var all_bulles = bulles_box.childNodes;
+        for(var i = 0;i < all_bulles.length;i++){
+            if(all_bulles[i].nodeName == "DIV")
+            {
+                
+            }
+        }
+    }
+    ,100);
+
+
+//---------clear bullets---------//
