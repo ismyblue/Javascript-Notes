@@ -75,10 +75,10 @@ function CContainer(){
 CContainer.prototype = new CSpirit();
 
 //---------- CContainer Definition End--------//
-
-var con = new CContainer();
+/*var con = new CContainer();
 con.init("gamediv","game-room","main");
 con.show();
+*/
 /**/
 
 
@@ -134,6 +134,18 @@ CInformationGroup.prototype.addInformation = function(sTitle, sContent,sId, sCla
 
 }
 
+//在消息组内修改一条消息，消息标题，内容，id,class,高度和宽度
+CInformationGroup.prototype.updateInformation = function(sTitle, sContent,sId, sClass, sWidth, sHeight){
+    var len = this.infos.length;
+    for(var i = 0;i < len;i++){
+        if(this.infos[i].title == sTitle)
+            this.infos[i].content = sContent;
+    }
+    var infog = document.getElementById(this.id);
+    infog.parentNode.removeChild(infog);
+    this.show(this.iNum, this.sPreId, this.sWidth, this.sHeight);
+}
+
 //更名父类的show函数为showBody
 CInformationGroup.prototype.showBody = CContainer.prototype.show;
 
@@ -153,20 +165,37 @@ CInformationGroup.prototype.show = function (iNum, sPreId, sWidth, sHeight) {
     else
         cols = parseInt(cols);
     nowHeight = (parseInt(nowHeight)/cols).toString() + "%";
-    var myself = document.getElementById(this.id);
+
     for(var i = 0;i < this.infos.length;i++) {
         this.infos[i].show(this.id, nowWidth, nowHeight);
     }
+
+    this.iNum = iNum;
+    this.sPreId = sPreId;
+    this.sWidth = sWidth;
+    this.sHeight = sHeight;
 }
+
+//更新消息，重新显示
+/*CInformationGroup.prototype.reShow = function () {
+    var infogroup = document.getElementById(this.id);
+    var infos = infogroup.childNodes;
+    for(var i = 0 ;i < infos.length;i++){
+        if(infos[i].className == "information"){
+            var title = infos[i].firstElementChild;
+            var content = infos[i].lastElementChild;
+            if(title.textContent == this.)
+        }
+    }
+}*/
 //----------CInformationGroup Class Definition End--------//
 
 /*var infog = new CInformationGroup();
 infog.init("infog","information-group","gamediv");
-infog.addInformation("score","2048","score-");
-infog.addInformation("score","2048","score-nfo");
-infog.addInformation("score","2048","score-fo");
-infog.addInformation("blood","68","blood");
-infog.show(2,"gamediv","100%","10%");
+infog.addInformation("score","2048","score");
+infog.addInformation("blood","100","blood");
+//infog.updateInformation("blood","80","blood");
+infog.show(2,"gamediv","100%","5%");
 */
 
 
@@ -263,15 +292,13 @@ CButtonGroup.prototype.show = function (iNum, sPreId, sWidth, sHeight) {
 }
 //------------CButtonGroup Class Definition End--------------//
 
-var btng = new CButtonGroup();
+/*var btng = new CButtonGroup();
 btng.init("btng","btn-group","gamediv");
 btng.addButton("","","btn1","btn-attack");
 btng.addButton("","","btn2","btn-attack");
-btng.addButton("","","btn3","btn-attack");
-btng.addButton("","","btn4","btn-attack");
-btng.show(2,"gamediv","100%","20%");
+btng.show(2,"gamediv","100%","10%");
 btng.move("0%","60%");
-/**/
+*/
 
 
 //---------------CGameMap Class Definition Begin--------------//
@@ -350,11 +377,13 @@ CGameMap.prototype.actionEnd = function(){
 }
 
 //---------------CGameMap Class Definition End--------------//
+/*
 var mp = new CGameMap();
 mp.init("bgmap","game-map","gamediv");
 mp.setMap("bgmap-1","bgmap-2","game-map-map1","game-map-map2");
 mp.show(null,"100%","100%");
 mp.actionStart(10);
+*/
 //mp.actionEnd();
 
 
@@ -497,7 +526,7 @@ CPlane.prototype.fire = function (iTime) {
 }
 
 //-------------CPlane Class Definition End-------------------//
-
+/*
 var plane = new CPlane();
 plane.init("plane","hero-plane","hero-plane-box","75px","50px");
 plane.bulletNumber = 2;
@@ -518,6 +547,7 @@ enemy.move("100px","100px");
 enemy.fire(1000);
 
 plane.move("150px","550px");
+*/
 
 //---------control bullets---------//
 
@@ -555,3 +585,84 @@ window.setInterval(
 
 
 //---------clear bullets---------//
+
+
+//---------CDirector Class Definition Begin--------------//
+function CDirector(){
+    CSpirit.call(this);
+    this.gameRoom = null;
+    this.infomationGroup = null;
+    this.buttonGroup = null;
+    this.gameMap = null;
+}
+
+CDirector.prototype = new CSpirit();
+
+//创建游戏房间
+CDirector.prototype.createGameRoom = function(sRoomId, sClass, sPreId){
+    this.gameRoom = new CContainer();
+    this.gameRoom.init(sRoomId,sClass,sPreId);
+    this.gameRoom.show();
+
+}
+
+//创建地图
+CDirector.prototype.createGameMap = function(sId, sClass, sPreId){
+    this.gameMap = new CGameMap();
+    this.gameMap.init(sId, sClass, sPreId);
+    this.gameMap.setMap("bgmap-1","bgmap-2","game-map-map1","game-map-map2");
+    this.gameMap.show(null,"100%","100%");
+    this.gameMap.actionStart(10);
+}
+
+//创建通知面板
+CDirector.prototype.createInformationGroup = function (sId, sClass, sPreId) {
+    this.infomationGroup = new CInformationGroup();
+    this.infomationGroup.init(sId, sClass, sPreId);
+}
+
+//创建按钮面板
+CDirector.prototype.createButtonGroup = function (sId, sClass, sPreId) {
+    this.buttonGroup = new CButtonGroup();
+    this.buttonGroup.init(sId, sClass, sPreId);
+}
+
+//创建英雄飞机
+CDirector.prototype.createHeroPlane = function (sId, sClass, sPreId) {
+    this.heroPlane = new CPlane();
+    this.heroPlane.init("plane","hero-plane","hero-plane-box","75px","50px");
+    this.heroPlane.bulletNumber = 2;
+    this.heroPlane.bulletType = "hreo-bullet";
+    this.heroPlane.direction = "up";
+    this.heroPlane.show();
+    this.heroPlane.move("200px","500px");
+    this.heroPlane.fire(200);
+}
+
+//创建敌人飞机
+CDirector.prototype.createEnemyPlane = function (sId, sClass, sPreId, sX_coor, sY_coor) {
+    var enemyPlane = new CPlane();
+    enemyPlane.init(sId,sClass,"enemy-plane-box","60px","60px");
+    enemyPlane.bulletNumber = 2;
+    enemyPlane.bulletType = "enemy-bullet";
+    enemyPlane.direction = "down";
+    enemyPlane.show();
+    enemyPlane.move(sX_coor,sY_coor);
+    enemyPlane.fire(1000);
+}
+
+//---------CDirector Class Definition End--------------//
+
+var director = new CDirector();
+director.createGameRoom("gameRoom","game-room","main");
+director.createGameMap("gameMap","game-map","gameRoom");
+director.createInformationGroup("informationGroup","information-group","gameRoom");
+director.infomationGroup.addInformation("Score:","0","inforScore");
+director.infomationGroup.addInformation("Blood:","100","inforBlood");
+director.infomationGroup.show(2, "gameRoom", "100%", "5%");
+director.infomationGroup.updateInformation("Blood:","80","inforBlood");
+director.createButtonGroup("buttonGroup","btn-group","gameRoom");
+director.buttonGroup.addButton("","director.startGame()","startButton","btn-attack");
+director.buttonGroup.show(1,"gameRoom","60%","10%");
+director.buttonGroup.move("20%","60%");
+

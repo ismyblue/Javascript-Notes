@@ -74,8 +74,10 @@
 .information-group{
     width: 100%;
     height: 10%;
+    position: absolute;
     background-image: url(../src/images/dialog_2.png);
     background-size: 100% 100%;
+    z-index: 10;
 }
 
 /*消息组内的所有元素*/
@@ -86,6 +88,8 @@
 /*按钮组*/
 .btn-group{
     z-index: 10;
+    background-image: url(../src/images/dialog_2.png);
+    background-size: 100% 100%;
 }
 
 /*按钮内的所有元素*/
@@ -128,6 +132,7 @@
 /*游戏地图的第一张图片*/
 .game-map-map1 {
     top: -100%;
+    /*background-image: url(../src/images/gamebg_0.jpg);*/
     background-image: url(../src/images/gamebg_1.jpg);
     transform: scaleY(-1);
 }
