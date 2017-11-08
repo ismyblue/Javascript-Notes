@@ -412,7 +412,7 @@ CFly.prototype.actionEnd = function(){
 
 //----------CFly Class Definition End---------------------//
 
-/**/
+/*
 var fly = new CFly();
 fly.init("flyid","fly","gamediv","80px","70px");
 fly.show();
@@ -420,7 +420,7 @@ fly.move("100px","100px");
 fly.actionStart("down",5);
 
 window.setInterval("if(parseInt(document.getElementById(fly.id).style.top) >= 500 )fly.actionEnd();", 1);
-
+*/
 
 //-------------CBuleet Class Definition Begin-------------------//
 
@@ -457,35 +457,41 @@ CPlane.prototype = new CFly();
 CPlane.prototype.bulletAllNumber = 0;
 
 //创建子弹，子弹类型class，子弹个数，iDamage伤害值，飞机宽度，飞机的style.top位置和style.left
-var createBullet = function (sBulletType, iBulletNumer, iDamage, sPlaneWidth, sPlaneTop, sPlaneleft) {
+var createBullet = function (sDirection, sBulletType, iBulletNumer, iDamage, sPlaneWidth, sPlaneHeight, sPlaneTop, sPlaneleft) {
     var bullets = new Array(iBulletNumer);
     for(var i = 0 ;i < iBulletNumer;i++)
         bullets[i] = new CBuleet(iDamage);
 
+
     for(var i = 0 ; i < iBulletNumer;i++){
-        bullets[i].init(CPlane.prototype.bulletAllNumber.toString(),"hreo-bullet","bullets-box","20px","40px");
+        bullets[i].init(CPlane.prototype.bulletAllNumber.toString(),sBulletType,"bullets-box","20px","40px");
         CPlane.prototype.bulletAllNumber++;
         bullets[i].show();
-        bullets[i].move(parseInt(sPlaneleft) + i*parseInt(sPlaneWidth)/iBulletNumer  + parseInt(sPlaneWidth)/iBulletNumer/2 - 10 + "px",parseInt(sPlaneTop) - 40 + "px");
-        bullets[i].actionStart("up",10);
+        if(sDirection == "up") {
+            bullets[i].move(parseInt(sPlaneleft) + i * parseInt(sPlaneWidth) / iBulletNumer + parseInt(sPlaneWidth) / iBulletNumer / 2 - 10 + "px", parseInt(sPlaneTop) - 40 + "px");
+        }
+        else if(sDirection == "down") {
+            bullets[i].move(parseInt(sPlaneleft) + i * parseInt(sPlaneWidth) / iBulletNumer + parseInt(sPlaneWidth) / iBulletNumer / 2 - 10 + "px", parseInt(sPlaneTop) + parseInt(sPlaneHeight) + "px");
+        }
     }
-
-
 }
 
 //发射子弹 iTime//发射子弹的时间间隔
 CPlane.prototype.fire = function (iTime) {
 
     var sBulletType = this.bulletType;
+    var sDirection = this.direction;
     var iBulletNumer = this.bulletNumber;
     var iDamage = this.damage;
     var sPlaneWidth = this.width;
-    var sPlaneTop = document.getElementById(this.id).style.top;
-    var sPlaneleft = document.getElementById(this.id).style.left;
+    var sPlaneHeight = this.height;
+    var sId = this.id;
 
     window.setInterval(
       function (){
-            createBullet(sBulletType, iBulletNumer, iDamage, sPlaneWidth, sPlaneTop, sPlaneleft);
+            var sPlaneTop = document.getElementById(sId).style.top;
+            var sPlaneleft = document.getElementById(sId).style.left;
+            createBullet(sDirection, sBulletType, iBulletNumer, iDamage, sPlaneWidth,sPlaneHeight, sPlaneTop, sPlaneleft);
         }
         ,iTime);
 }
@@ -493,22 +499,55 @@ CPlane.prototype.fire = function (iTime) {
 //-------------CPlane Class Definition End-------------------//
 
 var plane = new CPlane();
-plane.init("plane","hero-plane","gamediv","75px","50px");
+plane.init("plane","hero-plane","hero-plane-box","75px","50px");
 plane.bulletNumber = 2;
+plane.bulletType = "hreo-bullet";
+plane.direction = "up";
 plane.show();
 plane.move("200px","500px");
 plane.fire(200);
 
-//---------clear bullets---------//
 
+var enemy = new CPlane();
+enemy.init("enemy","enemy-plane","enemy-plane-box","60px","60px");
+enemy.bulletNumber = 1;
+enemy.bulletType = "enemy-bullet";
+enemy.direction = "down";
+enemy.show();
+enemy.move("100px","100px");
+enemy.fire(1000);
+
+plane.move("150px","550px");
+
+//---------control bullets---------//
+
+//所有子弹移动
 window.setInterval(
     function(){
         var bulles_box = document.getElementById("bullets-box");
         var all_bulles = bulles_box.childNodes;
         for(var i = 0;i < all_bulles.length;i++){
-            if(all_bulles[i].nodeName == "DIV")
-            {
-                
+            if(all_bulles[i].nodeName == "DIV" && all_bulles[i].className == "hreo-bullet"){
+                all_bulles[i].style.top = parseInt(all_bulles[i].style.top) - 10 + "px";
+            }
+            else if(all_bulles[i].nodeName == "DIV" && all_bulles[i].className == "enemy-bullet"){
+                all_bulles[i].style.top = parseInt(all_bulles[i].style.top) + 10 + "px";
+            }
+        }
+    }
+    ,50);
+
+//超界子弹清除
+window.setInterval(
+    function(){
+        var bulles_box = document.getElementById("bullets-box");
+        var all_bulles = bulles_box.childNodes;
+        for(var i = 0;i < all_bulles.length;i++){
+            if(all_bulles[i].nodeName == "DIV"){
+                if(parseInt(all_bulles[i].style.top) < 0 || parseInt(all_bulles[i].style.top) > 600)
+                    bulles_box.removeChild(all_bulles[i]);
+                /*if(parseInt(all_bulles[i].y_coor) < 100)
+                    bulles_box.removeChild(all_bulles[i]);*/
             }
         }
     }

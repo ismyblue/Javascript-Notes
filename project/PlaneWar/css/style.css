@@ -14,13 +14,8 @@
     overflow: hidden;
 }
 
-.game-room{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-image: url(../src/images/level6_bg_3.jpg);
-}
 
+/*子弹盒子*/
 #bullets-box{
     width: 100%;
     height: 100%;
@@ -29,6 +24,34 @@
     z-index: 9;
 }
 
+
+/*英雄飞机盒子*/
+#hero-plane-box{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: transparent;
+    z-index: 9;
+}
+
+/*敌人飞机盒子*/
+#enemy-plane-box{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: transparent;
+    z-index: 9;
+}
+
+/*游戏房间*/
+.game-room{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url(../src/images/level6_bg_3.jpg);
+}
+
+/*一条消息*/
 .information{
     display: block;
     color: red;
@@ -39,12 +62,15 @@
     border: 0px;
     padding: 0px;
 }
+
+/*被按下的开始按钮*/
 .information > *{
     float: left;
     margin: 0px;
     padding: 0 0 0 5px;
 }
 
+/*消息组*/
 .information-group{
     width: 100%;
     height: 10%;
@@ -52,18 +78,22 @@
     background-size: 100% 100%;
 }
 
+/*消息组内的所有元素*/
 .information-group > div{
     float: left;
 }
 
+/*按钮组*/
 .btn-group{
     z-index: 10;
 }
 
+/*按钮内的所有元素*/
 .btn-group > input{
     float: left;
 }
 
+/*正常的开始按钮*/
 .btn-attack{
     border: none;
     background: transparent;
@@ -73,18 +103,20 @@
 
 }
 
+/*被按下的开始按钮*/
 .btn-attack:active{
     background-image: url(../src/images/attack_button_press.png);
 }
 
 
-
+/*游戏地图*/
 .game-map {
     width: 100%;
     height: 100%;
     position: absolute;
 }
 
+/*游戏地图的所有标签*/
 .game-map > *{
     width: 100%;
     height: 100%;
@@ -92,16 +124,21 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
+
+/*游戏地图的第一张图片*/
 .game-map-map1 {
     top: -100%;
     background-image: url(../src/images/gamebg_1.jpg);
+    transform: scaleY(-1);
 }
 
+/*游戏地图的第二张图片*/
 .game-map-map2{
     top: 0%;
-    background-image: url(../src/images/gamebg_2.jpg);
+    background-image: url(../src/images/gamebg_1.jpg);
 }
 
+/*飞行物体*/
 .fly{
     position: absolute;
     background: url(../src/images/enemy_10.png);
@@ -109,7 +146,7 @@
     background-size: 100% 100%;
 }
 
-
+/*英雄飞机*/
 .hero-plane{
     position: absolute;
     background: url(../src/images/img_plane_main.png);
@@ -118,7 +155,8 @@
     background-position: 0px -50px;
 }
 
-.hreo-bullet{
+/*英雄子弹*/
+.hreo-bullet {
     position: absolute;
     /*border: red solid;*/
     background: url(../src/images/bullet_1.png);
@@ -126,3 +164,22 @@
     background-size:  100% 100%;
     z-index: 11;
 }
+
+/*敌人飞机*/
+.enemy-plane{
+    position: absolute;
+    background: url(../src/images/enemy_6.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+
+/*敌人子弹*/
+.enemy-bullet{
+    position: absolute;
+    /*border: red solid;*/
+    background: url(../src/images/bluestar_4.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+    z-index: 11;
+}
+
