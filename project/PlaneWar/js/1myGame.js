@@ -51,10 +51,10 @@ CSpirit.prototype.show = function(sPreId, sWidth, sHeight){
 //移动精灵位置，传入参数，x和y的坐标，坐标原点在左上角
 CSpirit.prototype.move = function(sX_coor, sY_coor){
     var myself = document.getElementById(this.id);
-        this.x_coor = sX_coor;
-        this.y_coor = sY_coor;
-        myself.style.left = this.x_coor;
-        myself.style.top = this.y_coor;401
+    this.x_coor = sX_coor;
+    this.y_coor = sY_coor;
+    myself.style.left = this.x_coor;
+    myself.style.top = this.y_coor;
 }
 
 //在dom销毁此元素
@@ -236,10 +236,8 @@ CButton.prototype.show = function(sPreId, sWidth, sHeight) {
         input.style.width = this.width;
     if(this.height != null)
         input.style.height = this.height;
-	if(this.functionName != null)    
-		input.setAttribute("onclick",this.functionName);	
-	if(this.value != null)
-		input.value = this.value;		
+    input.value = this.value;
+    input.onclick = this.functionName;
     pre.appendChild(input);
 }
 
@@ -596,7 +594,6 @@ function CDirector(){
     this.infomationGroup = null;
     this.buttonGroup = null;
     this.gameMap = null;
-	this.heroPlane = null;
 }
 
 CDirector.prototype = new CSpirit();
@@ -631,16 +628,15 @@ CDirector.prototype.createButtonGroup = function (sId, sClass, sPreId) {
 }
 
 //创建英雄飞机
-CDirector.prototype.createHeroPlane = function (sId, sClass, sPreId, sWidth, sHeight, sBulletType, sDir) {
+CDirector.prototype.createHeroPlane = function (sId, sClass, sPreId) {
     this.heroPlane = new CPlane();
-	this.heroPlane.init(sId, sClass, sPreId, sWidth, sHeight);
-    //this.heroPlane.init("plane","hero-plane","hero-plane-box","75px","50px");
+    this.heroPlane.init("plane","hero-plane","hero-plane-box","75px","50px");
     this.heroPlane.bulletNumber = 2;
-    this.heroPlane.bulletType = sBulletType;//"hreo-bullet";
-    this.heroPlane.direction = sDir;//"up";
+    this.heroPlane.bulletType = "hreo-bullet";
+    this.heroPlane.direction = "up";
     this.heroPlane.show();
-    this.heroPlane.move("150px","500px");
-    this.heroPlane.fire(200);	
+    this.heroPlane.move("200px","500px");
+    this.heroPlane.fire(200);
 }
 
 //创建敌人飞机
@@ -655,18 +651,7 @@ CDirector.prototype.createEnemyPlane = function (sId, sClass, sPreId, sX_coor, s
     enemyPlane.fire(1000);
 }
 
-//开始游戏，创建英雄和英雄飞机和敌机
-CDirector.prototype.startGame = function(){
-	this.createHeroPlane("plane","hero-plane","hero-plane-box","75px","50px","hreo-bullet","up");		
-	
-	//this.createEnemyPlane();	
-	this.buttonGroup.destory();
-	document.onkeypress = controlHeroPlane;
-    document.onkeyup = stopControlHeroPlane;
-}
-
 //---------CDirector Class Definition End--------------//
-
 
 var director = new CDirector();
 director.createGameRoom("gameRoom","game-room","main");
@@ -675,58 +660,9 @@ director.createInformationGroup("informationGroup","information-group","gameRoom
 director.infomationGroup.addInformation("Score:","0","inforScore");
 director.infomationGroup.addInformation("Blood:","100","inforBlood");
 director.infomationGroup.show(2, "gameRoom", "100%", "5%");
+director.infomationGroup.updateInformation("Blood:","80","inforBlood");
 director.createButtonGroup("buttonGroup","btn-group","gameRoom");
 director.buttonGroup.addButton("","director.startGame()","startButton","btn-attack");
 director.buttonGroup.show(1,"gameRoom","60%","10%");
 director.buttonGroup.move("20%","60%");
-
-document.onkeypress = function(e){ var e = e || window.event; if(e.keyCode == 13)director.startGame();}
-
-var ctrlPlaneTime ;//定时器
-var timeFlag = false;//防止一直响应
-
-//方向控制飞机移动
-function controlHeroPlane(e)
-{
-    if(timeFlag == true){
-        return ;
-    }
-
-   var e = e||event;
-   var currKey = e.keyCode||e.which||e.charCode;   
-       switch (currKey)
-       {
-       case 37:
-           ctrlPlaneTime = window.setInterval(function () {
-                    director.heroPlane.move(parseInt(director.heroPlane.x_coor) - 2 + "px", director.heroPlane.y_coor)
-                },10);
-			break;
-       case 38:
-           ctrlPlaneTime = window.setInterval(function () {
-               director.heroPlane.move(director.heroPlane.x_coor, parseInt(director.heroPlane.y_coor) - 2 + "px");
-           },10);
-			break;
-       case 39:
-           ctrlPlaneTime = window.setInterval(function () {
-               director.heroPlane.move(parseInt(director.heroPlane.x_coor) + 2 + "px", director.heroPlane.y_coor);
-           },10);
-			break;
-       case 40:
-           ctrlPlaneTime = window.setInterval(function () {
-               director.heroPlane.move(director.heroPlane.x_coor, parseInt(director.heroPlane.y_coor) + 2 + "px");
-           },10);
-			break;
-       default : break;
-       }
-       timeFlag = true;
-}
-
-
-function stopControlHeroPlane(){
-    clearInterval(ctrlPlaneTime);
-    timeFlag = false;
-}
-
-
-
 
