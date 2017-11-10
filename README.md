@@ -14,5 +14,5 @@
 ## 面对对象编程实例
 
 0. PlaneWar 飞机大战
-![游戏界面](游戏界面 "https://github.com/BruceHuangHao/Javascript-Notes/blob/master/project/PlaneWar/src/images/game.png")
+![游戏界面](https://raw.githubusercontent.com/BruceHuangHao/Javascript-Notes/master/project/PlaneWar/src/images/game.png)
 
