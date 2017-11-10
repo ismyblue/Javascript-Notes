@@ -5,6 +5,7 @@
     margin: auto;
     width: 25% ;
     height: 620px ;
+    border: solid red;
     position: relative;
 }
 #main  > *{
@@ -171,18 +172,146 @@
 }
 
 /*敌人飞机*/
-.enemy-plane{
+.enemy-plane1{
+    position: absolute;
+    background: url(../src/images/enemy_1.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.enemy-plane2{
+    position: absolute;
+    background: url(../src/images/enemy_2.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.enemy-plane3{
+    position: absolute;
+    background: url(../src/images/enemy_3.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.enemy-plane4{
+    position: absolute;
+    background: url(../src/images/enemy_4.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.enemy-plane5{
+    position: absolute;
+    background: url(../src/images/enemy_5.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.enemy-plane6{
     position: absolute;
     background: url(../src/images/enemy_6.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
 }
+.enemy-plane7{
+    position: absolute;
+    background: url(../src/images/enemy_7.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.enemy-plane8{
+    position: absolute;
+    background: url(../src/images/enemy_8.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.enemy-plane9{
+    position: absolute;
+    background: url(../src/images/enemy_9.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.enemy-plane10{
+    position: absolute;
+    background: url(../src/images/enemy_10.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+
+
 
 /*敌人子弹*/
-.enemy-bullet{
+.enemy-bullet1{
     position: absolute;
     /*border: red solid;*/
-    background: url(../src/images/bluestar_4.png);
+    background: url(../src/images/enemy_bullet_1.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+    z-index: 11;
+}
+.enemy-bullet2{
+    position: absolute;
+    /*border: red solid;*/
+    background: url(../src/images/enemy_bullet_2.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+    z-index: 11;
+}
+.enemy-bullet3{
+    position: absolute;
+    /*border: red solid;*/
+    background: url(../src/images/enemy_bullet_3.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+    z-index: 11;
+}
+.enemy-bullet4{
+    position: absolute;
+    /*border: red solid;*/
+    background: url(../src/images/enemy_bullet_4.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+    z-index: 11;
+}
+.enemy-bullet5{
+    position: absolute;
+    /*border: red solid;*/
+    background: url(../src/images/enemy_bullet_5.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+    z-index: 11;
+}
+.enemy-bullet6{
+    position: absolute;
+    /*border: red solid;*/
+    background: url(../src/images/enemy_bullet_6.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+    z-index: 11;
+}
+.enemy-bullet7{
+    position: absolute;
+    /*border: red solid;*/
+    background: url(../src/images/enemy_bullet_7.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+    z-index: 11;
+}
+.enemy-bullet8{
+    position: absolute;
+    /*border: red solid;*/
+    background: url(../src/images/enemy_bullet_1.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+    z-index: 11;
+}
+.enemy-bullet9{
+    position: absolute;
+    /*border: red solid;*/
+    background: url(../src/images/enemy_bullet_1.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+    z-index: 11;
+}
+.enemy-bullet10{
+    position: absolute;
+    /*border: red solid;*/
+    background: url(../src/images/enemy_bullet_1.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
     z-index: 11;

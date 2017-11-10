@@ -520,6 +520,7 @@ var createBullet = function (sDirection, sBulletType, iBulletNumer, iDamage, sPl
     for(var i = 0 ; i < iBulletNumer;i++){
         bullets[i].init(CPlane.prototype.bulletAllNumber.toString(),sBulletType,"bullets-box","20px","40px");
         CPlane.prototype.bulletAllNumber++;
+
         bullets[i].show();
         if(sDirection == "up") {
             bullets[i].move(parseInt(sPlaneleft) + i * parseInt(sPlaneWidth) / iBulletNumer + parseInt(sPlaneWidth) / iBulletNumer / 2 - 10 + "px", parseInt(sPlaneTop) - 40 + "px");
@@ -613,11 +614,11 @@ CDirector.prototype.createEnemyPlane = function (sId, sClass, sPreId, sWidth, sH
     var enemyPlane = new CPlane();
     enemyPlane.init(sId,sClass,"enemy-plane-box","60px","60px");
     enemyPlane.bulletNumber = 1;
-    enemyPlane.bulletType = "enemy-bullet";
-    enemyPlane.direction = "down";
+    enemyPlane.bulletType = sBulletType;
+    enemyPlane.direction = sDir;
     enemyPlane.show();
     enemyPlane.move(sX_coor,sY_coor);
-    enemyPlane.actionStart("down",10);
+    enemyPlane.actionStart(sDir,10);
     enemyPlane.fire(1000);
 }
 
@@ -632,8 +633,15 @@ CDirector.prototype.randomCreateEnemyPlane = function(){
         function(){
             var sX_coor = Math.random()*300;
             CDirector.prototype.enemyPlaneId++;
-            createEnemyPlane(CDirector.prototype.enemyPlaneId++,"enemy-plane",
-                "enemy-plane-box","40px","40px","enemy-bullet","down",parseInt(sX_coor,10) + "px", "-80px");
+
+            var num = parseInt(Math.random()*10+1);
+            var enemyPlaneClass = "enemy-plane" + num;
+            var enemyBulletClass = "enemy-bullet" + num;
+
+            //alert(enemyBulletClass);
+
+            createEnemyPlane(CDirector.prototype.enemyPlaneId++,enemyPlaneClass ,
+                "enemy-plane-box","40px","40px",enemyBulletClass,"down",parseInt(sX_coor,10) + "px", "-80px");
 
         },1000
     );
@@ -666,7 +674,7 @@ window.setInterval(
             if(all_bulles[i].nodeName == "DIV" && all_bulles[i].className == "hreo-bullet"){
                 all_bulles[i].style.top = parseInt(all_bulles[i].style.top) - 20 + "px";
             }
-            else if(all_bulles[i].nodeName == "DIV" && all_bulles[i].className == "enemy-bullet"){
+            else if(all_bulles[i].nodeName == "DIV" && all_bulles[i].className.indexOf("enemy-bullet") >= 0){
                 all_bulles[i].style.top = parseInt(all_bulles[i].style.top) + 10 + "px";
             }
         }
