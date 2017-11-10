@@ -395,7 +395,6 @@ mp.actionStart(10);
 
 function CFly(){
     CSpirit.call(this);
-    this.timeName = null;       //定时器
     this.stepLength = 1;     //飞行器的移动步长;
 }
 
@@ -410,13 +409,13 @@ var flyMove = function (sFlyId, sDir, stepLength){
             flyEle.style.top = (parseInt(flyEle.style.top) - stepLength).toString() + "px";
             break;
         case "down":
-            flyEle.style.top = (parseFloat(flyEle.style.top) + stepLength).toString() + "px";
+            flyEle.style.top = (parseInt(flyEle.style.top) + stepLength).toString() + "px";
             break;
         case "left":
-            flyEle.style.left = (parseFloat(flyEle.style.left) - stepLength).toString() + "px";
+            flyEle.style.left = (parseInt(flyEle.style.left) - stepLength).toString() + "px";
             break;
         case "right":
-            flyEle.style.left = (parseFloat(flyEle.style.left) + stepLength).toString() + "px";
+            flyEle.style.left = (parseInt(flyEle.style.left) + stepLength).toString() + "px";
             break;
         default :break;
     }
@@ -427,18 +426,42 @@ var flyMove = function (sFlyId, sDir, stepLength){
 CFly.prototype.actionStart = function(sDir, iTime){
     var flyId = this.id;
     var stepLength = this.stepLength;
-    var stop = this.timeName;
-    this.timeName = window.setInterval(
-        function () {
-            flyMove(flyId, sDir, stepLength);
 
-        }
-        ,iTime);
+    switch (sDir){
+        case "left": this.timeLeftName = window.setInterval(
+            function () {
+                flyMove(flyId, sDir, stepLength);
+            }
+            ,iTime);
+            break;
+        case "up": this.timeUpName = window.setInterval(
+            function () {
+                flyMove(flyId, sDir, stepLength);
+            }
+            ,iTime);
+            break;
+        case "right": this.timeRightName = window.setInterval(
+            function () {
+                flyMove(flyId, sDir, stepLength);
+            }
+            ,iTime);
+            break;
+        case "down": this.timeDownName = window.setInterval(
+            function () {
+                flyMove(flyId, sDir, stepLength);
+            }
+            ,iTime);
+            break;
+        default : break;
+    }
 }
 
 //飞行器停止运动
 CFly.prototype.actionEnd = function(){
-    clearInterval(this.timeName);
+    clearInterval(this.timeLeftName);
+    clearInterval(this.timeUpName);
+    clearInterval(this.timeRightName);
+    clearInterval(this.timeDownName);
 }
 
 //----------CFly Class Definition End---------------------//
@@ -528,65 +551,8 @@ CPlane.prototype.fire = function (iTime) {
 }
 
 //-------------CPlane Class Definition End-------------------//
-/*
-var plane = new CPlane();
-plane.init("plane","hero-plane","hero-plane-box","75px","50px");
-plane.bulletNumber = 2;
-plane.bulletType = "hreo-bullet";
-plane.direction = "up";
-plane.show();
-plane.move("200px","500px");
-plane.fire(200);
 
 
-var enemy = new CPlane();
-enemy.init("enemy","enemy-plane","enemy-plane-box","60px","60px");
-enemy.bulletNumber = 1;
-enemy.bulletType = "enemy-bullet";
-enemy.direction = "down";
-enemy.show();
-enemy.move("100px","100px");
-enemy.fire(1000);
-
-plane.move("150px","550px");
-*/
-
-//---------control bullets---------//
-
-//所有子弹移动
-window.setInterval(
-    function(){
-        var bulles_box = document.getElementById("bullets-box");
-        var all_bulles = bulles_box.childNodes;
-        for(var i = 0;i < all_bulles.length;i++){
-            if(all_bulles[i].nodeName == "DIV" && all_bulles[i].className == "hreo-bullet"){
-                all_bulles[i].style.top = parseInt(all_bulles[i].style.top) - 10 + "px";
-            }
-            else if(all_bulles[i].nodeName == "DIV" && all_bulles[i].className == "enemy-bullet"){
-                all_bulles[i].style.top = parseInt(all_bulles[i].style.top) + 10 + "px";
-            }
-        }
-    }
-    ,50);
-
-//超界子弹清除
-window.setInterval(
-    function(){
-        var bulles_box = document.getElementById("bullets-box");
-        var all_bulles = bulles_box.childNodes;
-        for(var i = 0;i < all_bulles.length;i++){
-            if(all_bulles[i].nodeName == "DIV"){
-                if(parseInt(all_bulles[i].style.top) < 0 || parseInt(all_bulles[i].style.top) > 600)
-                    bulles_box.removeChild(all_bulles[i]);
-                /*if(parseInt(all_bulles[i].y_coor) < 100)
-                    bulles_box.removeChild(all_bulles[i]);*/
-            }
-        }
-    }
-    ,100);
-
-
-//---------clear bullets---------//
 
 
 //---------CDirector Class Definition Begin--------------//
@@ -596,7 +562,7 @@ function CDirector(){
     this.infomationGroup = null;
     this.buttonGroup = null;
     this.gameMap = null;
-	this.heroPlane = null;
+    this.heroPlane = new CPlane();
 }
 
 CDirector.prototype = new CSpirit();
@@ -632,7 +598,6 @@ CDirector.prototype.createButtonGroup = function (sId, sClass, sPreId) {
 
 //创建英雄飞机
 CDirector.prototype.createHeroPlane = function (sId, sClass, sPreId, sWidth, sHeight, sBulletType, sDir) {
-    this.heroPlane = new CPlane();
 	this.heroPlane.init(sId, sClass, sPreId, sWidth, sHeight);
     //this.heroPlane.init("plane","hero-plane","hero-plane-box","75px","50px");
     this.heroPlane.bulletNumber = 2;
@@ -640,32 +605,43 @@ CDirector.prototype.createHeroPlane = function (sId, sClass, sPreId, sWidth, sHe
     this.heroPlane.direction = sDir;//"up";
     this.heroPlane.show();
     this.heroPlane.move("150px","500px");
-    this.heroPlane.fire(200);	
+    this.heroPlane.fire(200);
 }
 
 //创建敌人飞机
-CDirector.prototype.createEnemyPlane = function (sId, sClass, sPreId, sX_coor, sY_coor) {
+CDirector.prototype.createEnemyPlane = function (sId, sClass, sPreId, sWidth, sHeight, sBulletType, sDir, sX_coor, sY_coor) {
     var enemyPlane = new CPlane();
     enemyPlane.init(sId,sClass,"enemy-plane-box","60px","60px");
-    enemyPlane.bulletNumber = 2;
+    enemyPlane.bulletNumber = 1;
     enemyPlane.bulletType = "enemy-bullet";
     enemyPlane.direction = "down";
     enemyPlane.show();
     enemyPlane.move(sX_coor,sY_coor);
+    enemyPlane.actionStart("down",10);
     enemyPlane.fire(1000);
 }
 
-//开始游戏，创建英雄和英雄飞机和敌机
-CDirector.prototype.startGame = function(){
-	this.createHeroPlane("plane","hero-plane","hero-plane-box","75px","50px","hreo-bullet","up");		
-	
-	//this.createEnemyPlane();	
-	this.buttonGroup.destory();
-	document.onkeypress = controlHeroPlane;
-    document.onkeyup = stopControlHeroPlane;
+
+var timeCreateEnemyPlane;
+CDirector.prototype.enemyPlaneId = 0;
+//随机创建敌机
+CDirector.prototype.randomCreateEnemyPlane = function(){
+
+    var createEnemyPlane = this.createEnemyPlane;
+    timeCreateEnemyPlane = window.setInterval(
+        function(){
+            var sX_coor = Math.random()*300;
+            CDirector.prototype.enemyPlaneId++;
+            createEnemyPlane(CDirector.prototype.enemyPlaneId++,"enemy-plane",
+                "enemy-plane-box","40px","40px","enemy-bullet","down",parseInt(sX_coor,10) + "px", "-80px");
+
+        },1000
+    );
 }
 
 //---------CDirector Class Definition End--------------//
+
+
 
 
 var director = new CDirector();
@@ -676,57 +652,133 @@ director.infomationGroup.addInformation("Score:","0","inforScore");
 director.infomationGroup.addInformation("Blood:","100","inforBlood");
 director.infomationGroup.show(2, "gameRoom", "100%", "5%");
 director.createButtonGroup("buttonGroup","btn-group","gameRoom");
-director.buttonGroup.addButton("","director.startGame()","startButton","btn-attack");
+director.buttonGroup.addButton("","startGame()","startButton","btn-attack");
 director.buttonGroup.show(1,"gameRoom","60%","10%");
 director.buttonGroup.move("20%","60%");
 
-document.onkeypress = function(e){ var e = e || window.event; if(e.keyCode == 13)director.startGame();}
 
-var ctrlPlaneTime ;//定时器
-var timeFlag = false;//防止一直响应
+//所有子弹移动
+window.setInterval(
+    function(){
+        var bulles_box = document.getElementById("bullets-box");
+        var all_bulles = bulles_box.childNodes;
+        for(var i = 0;i < all_bulles.length;i++){
+            if(all_bulles[i].nodeName == "DIV" && all_bulles[i].className == "hreo-bullet"){
+                all_bulles[i].style.top = parseInt(all_bulles[i].style.top) - 20 + "px";
+            }
+            else if(all_bulles[i].nodeName == "DIV" && all_bulles[i].className == "enemy-bullet"){
+                all_bulles[i].style.top = parseInt(all_bulles[i].style.top) + 10 + "px";
+            }
+        }
+    }
+    ,50);
 
-//方向控制飞机移动
+//超界元素清除 和 hero 不可以出界
+window.setInterval(
+    function(){
+        var bulles_box = document.getElementById("bullets-box");
+        var all_bulles = bulles_box.childNodes;
+        for(var i = 0;i < all_bulles.length;i++){
+            if(all_bulles[i].nodeName == "DIV"){
+                if(parseInt(all_bulles[i].style.top) < 0 || parseInt(all_bulles[i].style.top) > 600)
+                    bulles_box.removeChild(all_bulles[i]);
+            }
+        }
+
+        var enemy_plane_box = document.getElementById("enemy-plane-box");
+        var all_enemyPlanes = enemy_plane_box.childNodes;
+        for(var i = 0;i < all_enemyPlanes.length;i++){
+            if(all_enemyPlanes[i].nodeName == "DIV"){
+                if(parseInt(all_enemyPlanes[i].style.top) > 600) {
+                    //alert(all_enemyPlanes[i].id);
+                    enemy_plane_box.removeChild(all_enemyPlanes[i]);
+                }
+            }
+        }
+
+        var hero_plane_box = document.getElementById("hero-plane-box");
+        var all_heroPlanes = hero_plane_box.childNodes;
+        for(var i = 0;i < all_heroPlanes.length;i++){
+            if(all_heroPlanes[i].nodeName == "DIV"){
+                if(parseInt(all_heroPlanes[i].style.top) < 0)
+                    clearInterval(director.heroPlane.timeUpName);
+                if(parseInt(all_heroPlanes[i].style.top) > 560)
+                    clearInterval(director.heroPlane.timeDownName);
+                if(parseInt(all_heroPlanes[i].style.left) < 0)
+                    clearInterval(director.heroPlane.timeLeftName);
+                if(parseInt(all_heroPlanes[i].style.left) > 260)
+                    clearInterval(director.heroPlane.timeRightName);
+            }
+        }
+    }
+    ,100);
+
+
+var flagUp = false;//防止一直响应
+var flagDown = false;//防止一直响应
+var flagLeft = false;//防止一直响应
+var flagRight = false;//防止一直响应
+
+
+
+//控制飞机移动
 function controlHeroPlane(e)
 {
-    if(timeFlag == true){
-        return ;
-    }
-
    var e = e||event;
-   var currKey = e.keyCode||e.which||e.charCode;   
+   var currKey = e.keyCode||e.which||e.charCode;
        switch (currKey)
        {
-       case 37:
-           ctrlPlaneTime = window.setInterval(function () {
-                    director.heroPlane.move(parseInt(director.heroPlane.x_coor) - 2 + "px", director.heroPlane.y_coor)
-                },10);
-			break;
-       case 38:
-           ctrlPlaneTime = window.setInterval(function () {
-               director.heroPlane.move(director.heroPlane.x_coor, parseInt(director.heroPlane.y_coor) - 2 + "px");
-           },10);
-			break;
-       case 39:
-           ctrlPlaneTime = window.setInterval(function () {
-               director.heroPlane.move(parseInt(director.heroPlane.x_coor) + 2 + "px", director.heroPlane.y_coor);
-           },10);
-			break;
-       case 40:
-           ctrlPlaneTime = window.setInterval(function () {
-               director.heroPlane.move(director.heroPlane.x_coor, parseInt(director.heroPlane.y_coor) + 2 + "px");
-           },10);
-			break;
-       default : break;
+           case 37:
+               if(flagLeft == true)
+                   break;
+               director.heroPlane.actionStart("left",5);
+               flagLeft = true;
+               break;
+           case 38:
+               if(flagUp == true)
+                   break;
+               director.heroPlane.actionStart("up",5);
+               flagUp = true;
+               break;
+           case 39:
+               if(flagRight == true)
+                   break;
+               director.heroPlane.actionStart("right",5);
+               flagRight = true;
+               break;
+           case 40:
+               if(flagDown == true)
+                   break;
+               director.heroPlane.actionStart("down",5);
+               flagDown = true;
+               break;
+           default :
+               break;
        }
-       timeFlag = true;
+   //timeFlag = true;
 }
 
-
+//停止飞机移动
 function stopControlHeroPlane(){
-    clearInterval(ctrlPlaneTime);
-    timeFlag = false;
+    director.heroPlane.actionEnd();
+    flagUp = false;//防止一直响应
+    flagDown = false;//防止一直响应
+    flagLeft = false;//防止一直响应
+    flagRight = false;//防止一直响应
 }
 
 
 
+//开始游戏，创建英雄和英雄飞机和敌机
+function startGame(){
+    director.createHeroPlane("plane","hero-plane","hero-plane-box","75px","50px","hreo-bullet","up");
+    director.randomCreateEnemyPlane();
+    director.buttonGroup.destory();
+    document.onkeydown = controlHeroPlane;
+    document.onkeyup = stopControlHeroPlane;
+
+}
+
+
+document.onkeydown = function(e){ var e = e || window.event; if(e.keyCode == 13) startGame();}
 
