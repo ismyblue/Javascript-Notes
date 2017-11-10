@@ -776,7 +776,8 @@ function startGame(){
     director.buttonGroup.destory();
     document.onkeydown = controlHeroPlane;
     document.onkeyup = stopControlHeroPlane;
-
+    document.getElementById("music-box").innerHTML =
+        "<audio src=\"src/audio/bgm.mp3\" id=\"audio\" hidden=\"true\" autoplay=\"true\" loop=\"true\"></audio>";
 }
 
 
