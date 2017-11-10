@@ -29,6 +29,10 @@ CSpirit.prototype.init = function(sId, sClass, sPreId, sWidth, sHeight){
 
 //在父容器内显示精灵元素，可以传参数给定显示宽度高度
 CSpirit.prototype.show = function(sPreId, sWidth, sHeight){
+    if(document.getElementById(this.id) != null) {
+        var myself = document.getElementById(this.id);
+        myself.parentNode.removeChild(myself);
+    }
     if(sPreId != null)
         this.preId = sPreId;
     if(sWidth != null)
@@ -46,6 +50,7 @@ CSpirit.prototype.show = function(sPreId, sWidth, sHeight){
     div.style.top = this.y_coor;
     var pre = document.getElementById(this.preId);
     pre.appendChild(div);
+
 }
 
 //移动精灵位置，传入参数，x和y的坐标，坐标原点在左上角
@@ -597,7 +602,7 @@ CDirector.prototype.createButtonGroup = function (sId, sClass, sPreId) {
     this.buttonGroup.init(sId, sClass, sPreId);
 }
 
-//创建英雄飞机
+//创建一架英雄飞机
 CDirector.prototype.createHeroPlane = function (sId, sClass, sPreId, sWidth, sHeight, sBulletType, sDir) {
 	this.heroPlane.init(sId, sClass, sPreId, sWidth, sHeight);
     //this.heroPlane.init("plane","hero-plane","hero-plane-box","75px","50px");
@@ -609,7 +614,7 @@ CDirector.prototype.createHeroPlane = function (sId, sClass, sPreId, sWidth, sHe
     this.heroPlane.fire(200);
 }
 
-//创建敌人飞机
+//创建一架敌人飞机
 CDirector.prototype.createEnemyPlane = function (sId, sClass, sPreId, sWidth, sHeight, sBulletType, sDir, sX_coor, sY_coor) {
     var enemyPlane = new CPlane();
     enemyPlane.init(sId,sClass,"enemy-plane-box","60px","60px");
@@ -637,9 +642,6 @@ CDirector.prototype.randomCreateEnemyPlane = function(){
             var num = parseInt(Math.random()*10+1);
             var enemyPlaneClass = "enemy-plane" + num;
             var enemyBulletClass = "enemy-bullet" + num;
-
-            //alert(enemyBulletClass);
-
             createEnemyPlane(CDirector.prototype.enemyPlaneId++,enemyPlaneClass ,
                 "enemy-plane-box","40px","40px",enemyBulletClass,"down",parseInt(sX_coor,10) + "px", "-80px");
 
@@ -654,11 +656,7 @@ CDirector.prototype.randomCreateEnemyPlane = function(){
 
 var director = new CDirector();
 director.createGameRoom("gameRoom","game-room","main");
-director.createGameMap("gameMap","game-map","gameRoom");
-director.createInformationGroup("informationGroup","information-group","gameRoom");
-director.infomationGroup.addInformation("Score:","0","inforScore");
-director.infomationGroup.addInformation("Blood:","100","inforBlood");
-director.infomationGroup.show(2, "gameRoom", "100%", "5%");
+
 director.createButtonGroup("buttonGroup","btn-group","gameRoom");
 director.buttonGroup.addButton("","startGame()","startButton","btn-attack");
 director.buttonGroup.show(1,"gameRoom","60%","10%");
@@ -776,9 +774,14 @@ function stopControlHeroPlane(){
 }
 
 
-
 //开始游戏，创建英雄和英雄飞机和敌机
 function startGame(){
+    director.createGameMap("gameMap","game-map","gameRoom");
+    director.createInformationGroup("informationGroup","information-group","gameRoom");
+    director.infomationGroup.addInformation("Score:","0","inforScore");
+    director.infomationGroup.addInformation("Blood:","100","inforBlood");
+    director.infomationGroup.show(2, "gameRoom", "100%", "5%");
+
     director.createHeroPlane("plane","hero-plane","hero-plane-box","75px","50px","hreo-bullet","up");
     director.randomCreateEnemyPlane();
     director.buttonGroup.destory();
@@ -787,7 +790,40 @@ function startGame(){
     document.getElementById("music-box").innerHTML =
         "<audio src=\"src/audio/bgm.mp3\" id=\"audio\" hidden=\"true\" autoplay=\"true\" loop=\"true\"></audio>";
 }
+//********************************************************************************
+//检测碰撞
+function detectionPlaneAndBullet() {
+    var heroPlane_box = document.getElementsByTagName("hero-plane-box");
+    var heroPlanes = heroPlane_box.childNodes;
+    var enemyPlane_box = document.getElementsByTagName("enemy-plane-box");
+    var enemyPPlanes = heroPlane_box.childNodes;
+    var bullet_box = document.getElementsByTagName("bullets-box");
+    var bullets = heroPlane_box.childNodes;
 
+
+}
+
+//爆炸效果
+function  boom(sX_coor, sY_coor) {
+
+    var t = window.setInterval(
+        function(){
+            for(var i = 1; i <= 10;i++){
+                var boompng = new CSpirit();
+                var className = "boom" + i;
+                boompng.init("boomId",className,"gameRoom","60px","60px");
+                boompng.show();
+                boompng.move(sX_coor,sY_coor);
+                //alert("fasdf");
+                var destory = boompng.destory();
+                window.setTimeout(destory,1000);
+                //alert("sho");
+            }
+        }
+        ,1000);
+}
+//*******************************************************************************
+boom("100px","100px");
 
 document.onkeydown = function(e){ var e = e || window.event; if(e.keyCode == 13) startGame();}
 

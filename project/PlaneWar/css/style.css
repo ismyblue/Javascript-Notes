@@ -89,7 +89,7 @@
 /*按钮组*/
 .btn-group{
     z-index: 10;
-    background-image: url(../src/images/dialog_2.png);
+    /*background-image: url(../src/images/dialog_2.png);*/
     background-size: 100% 100%;
 }
 
@@ -238,7 +238,6 @@
 /*敌人子弹*/
 .enemy-bullet1{
     position: absolute;
-    /*border: red solid;*/
     background: url(../src/images/enemy_bullet_1.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
@@ -246,7 +245,6 @@
 }
 .enemy-bullet2{
     position: absolute;
-    /*border: red solid;*/
     background: url(../src/images/enemy_bullet_2.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
@@ -254,7 +252,6 @@
 }
 .enemy-bullet3{
     position: absolute;
-    /*border: red solid;*/
     background: url(../src/images/enemy_bullet_3.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
@@ -262,7 +259,6 @@
 }
 .enemy-bullet4{
     position: absolute;
-    /*border: red solid;*/
     background: url(../src/images/enemy_bullet_4.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
@@ -270,7 +266,6 @@
 }
 .enemy-bullet5{
     position: absolute;
-    /*border: red solid;*/
     background: url(../src/images/enemy_bullet_5.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
@@ -278,7 +273,6 @@
 }
 .enemy-bullet6{
     position: absolute;
-    /*border: red solid;*/
     background: url(../src/images/enemy_bullet_6.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
@@ -286,7 +280,6 @@
 }
 .enemy-bullet7{
     position: absolute;
-    /*border: red solid;*/
     background: url(../src/images/enemy_bullet_7.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
@@ -294,7 +287,6 @@
 }
 .enemy-bullet8{
     position: absolute;
-    /*border: red solid;*/
     background: url(../src/images/enemy_bullet_1.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
@@ -302,7 +294,6 @@
 }
 .enemy-bullet9{
     position: absolute;
-    /*border: red solid;*/
     background: url(../src/images/enemy_bullet_1.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
@@ -310,10 +301,66 @@
 }
 .enemy-bullet10{
     position: absolute;
-    /*border: red solid;*/
     background: url(../src/images/enemy_bullet_1.png);
     background-repeat: no-repeat;
     background-size:  100% 100%;
     z-index: 11;
 }
 
+
+.boom1, .boom2, .boom3, .boom4, .boom5, .boom6, .boom7, .boom8, .boom9, .boom10 {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+
+.boom1{
+    background: url(../src/images/boom1.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.boom2{
+    background: url(../src/images/boom2.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.boom3{
+    background: url(../src/images/boom3.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.boom4{
+    background: url(../src/images/boom4.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.boom5{
+    background: url(../src/images/boom5.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.boom6{
+    background: url(../src/images/boom6.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.boom7{
+    background: url(../src/images/boom7.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.boom8{
+    background: url(../src/images/boom8.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.boom9{
+    background: url(../src/images/boom9.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
+.boom10{
+    background: url(../src/images/boom10.png);
+    background-repeat: no-repeat;
+    background-size:  100% 100%;
+}
