@@ -877,10 +877,6 @@ function detectionPlaneAndBullet() {
 
         if( Math.abs(x1 - x2) < (parseInt(ele1.style.width) + parseInt(ele2.style.width))/2 -15
             && Math.abs(y1 - y2) < (parseInt(ele1.style.height) + parseInt(ele2.style.height))/2 - 15){
-        /*alert(Math.abs(x1 - x2) + " "
-             + (parseInt(ele1.style.width) + parseInt(ele2.style.width))/2 + " "
-             + (Math.abs(y1 - y2)) + " "
-             + (parseInt(ele1.style.height) + parseInt(ele2.style.height))/2);*/
             return true;
         }
               //alert("false");
@@ -937,6 +933,35 @@ function detectionPlaneAndBullet() {
         }
     }
 
+    //检测enemy和hero的碰撞
+    for(var i = 0 ;i < heroPlanes.length;i++){
+        for(var j= 0 ;j < enemyPlanes.length;j++){
+            if(isPengZhuang(heroPlanes[i].id, enemyPlanes[j].id)){
+
+                //alert(parseInt(enemyPlanes[i].getAttribute("blood")));
+                if(parseInt(heroPlanes[i].getAttribute("blood")) <= 0) {
+                    var x1 = parseInt(heroPlanes[i].style.left);
+                    var y1 = parseInt(heroPlanes[i].style.top);
+                    boom(x1 + "px", y1 + "px");
+
+                    heroPlanes[i].parentNode.removeChild(heroPlanes[i]);
+                    heroPlanes.splice(i, 1);
+                }
+                else{
+                    director.infomationGroup.updateInformation("Blood:", (parseInt(director.infomationGroup.getContent("Blood:")) - 20).toString());
+                    document.getElementById("hero-plane-boom-box").style.zIndex = "11";
+                    window.setTimeout(function(){document.getElementById("hero-plane-boom-box").style.zIndex = "0";},200);
+                    //alert("sdaf");
+                    heroPlanes[i].setAttribute("blood",(parseInt(heroPlanes[i].getAttribute("blood")) - 20).toString());
+                }
+                var x2 = parseInt(enemyPlanes[i].style.left);
+                var y2 = parseInt(enemyPlanes[i].style.top);
+                boom(x2 + "px", y2 + "px");
+                enemyPlanes[i].parentNode.removeChild(enemyPlanes[i]);
+                enemyPlanes.splice(i, 1);
+            }
+        }
+    }
 }
 
 //*******************************************************************************
