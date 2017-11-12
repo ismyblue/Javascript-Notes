@@ -1,12 +1,20 @@
 *{
     margin: auto;
 }
+
 #main{
-    margin: auto;
-    width: 25% ;
+    margin: 0px auto;
+    width: 80% ;
     height: 620px ;
     border: solid red;
     position: relative;
+}
+@media (max-width: 768px){
+    #main{
+        margin: 0px  auto;
+        padding: 0;
+        width:100%;
+    }
 }
 #main  > *{
     position: absolute;
