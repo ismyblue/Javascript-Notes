@@ -64,6 +64,7 @@ CSpirit.prototype.move = function(sX_coor, sY_coor){
 
 //在dom销毁此元素
 CSpirit.prototype.destory = function(){
+    //alert("destoory");
     var myself = document.getElementById(this.id);
     myself.parentNode.removeChild(myself);
 }
@@ -149,6 +150,15 @@ CInformationGroup.prototype.updateInformation = function(sTitle, sContent,sId, s
     var infog = document.getElementById(this.id);
     infog.parentNode.removeChild(infog);
     this.show(this.iNum, this.sPreId, this.sWidth, this.sHeight);
+}
+
+CInformationGroup.prototype.getContent = function(sTitle){
+    var len = this.infos.length;
+    for(var i = 0;i < len;i++){
+        if(this.infos[i].title == sTitle)
+            return this.infos[i].content;
+    }
+    return null;
 }
 
 //更名父类的show函数为showBody
@@ -512,6 +522,11 @@ function CPlane(){
 }
 
 CPlane.prototype = new CFly();
+CPlane.prototype.showBody = CFly.prototype.show;
+CPlane.prototype.show = function(sPreId, sWidth, sHeight){
+    this.showBody(sPreId, sWidth, sHeight);
+    document.getElementById(this.id).setAttribute("blood",this.bloodVloume);
+}
 
 CPlane.prototype.bulletAllNumber = 0;
 
@@ -523,7 +538,7 @@ var createBullet = function (sDirection, sBulletType, iBulletNumer, iDamage, sPl
 
 
     for(var i = 0 ; i < iBulletNumer;i++){
-        bullets[i].init(CPlane.prototype.bulletAllNumber.toString(),sBulletType,"bullets-box","20px","40px");
+        bullets[i].init(CPlane.prototype.bulletAllNumber.toString(),sBulletType,"bullets-box","20px","30px");
         CPlane.prototype.bulletAllNumber++;
 
         bullets[i].show();
@@ -642,9 +657,8 @@ CDirector.prototype.randomCreateEnemyPlane = function(){
             var num = parseInt(Math.random()*10+1);
             var enemyPlaneClass = "enemy-plane" + num;
             var enemyBulletClass = "enemy-bullet" + num;
-            createEnemyPlane(CDirector.prototype.enemyPlaneId++,enemyPlaneClass ,
+            createEnemyPlane("enemyPlane" + CDirector.prototype.enemyPlaneId,enemyPlaneClass ,
                 "enemy-plane-box","40px","40px",enemyBulletClass,"down",parseInt(sX_coor,10) + "px", "-80px");
-
         },1000
     );
 }
@@ -782,48 +796,152 @@ function startGame(){
     director.infomationGroup.addInformation("Blood:","100","inforBlood");
     director.infomationGroup.show(2, "gameRoom", "100%", "5%");
 
-    director.createHeroPlane("plane","hero-plane","hero-plane-box","75px","50px","hreo-bullet","up");
+    director.createHeroPlane("heroplane","hero-plane","hero-plane-box","75px","60px","hreo-bullet","up");
     director.randomCreateEnemyPlane();
     director.buttonGroup.destory();
     document.onkeydown = controlHeroPlane;
     document.onkeyup = stopControlHeroPlane;
     document.getElementById("music-box").innerHTML =
         "<audio src=\"src/audio/bgm.mp3\" id=\"audio\" hidden=\"true\" autoplay=\"true\" loop=\"true\"></audio>";
-}
-//********************************************************************************
-//检测碰撞
-function detectionPlaneAndBullet() {
-    var heroPlane_box = document.getElementsByTagName("hero-plane-box");
-    var heroPlanes = heroPlane_box.childNodes;
-    var enemyPlane_box = document.getElementsByTagName("enemy-plane-box");
-    var enemyPPlanes = heroPlane_box.childNodes;
-    var bullet_box = document.getElementsByTagName("bullets-box");
-    var bullets = heroPlane_box.childNodes;
 
 
+    window.setInterval("detectionPlaneAndBullet()",10);
 }
 
-//爆炸效果
+
+//爆炸效果 爆炸坐标点
 function  boom(sX_coor, sY_coor) {
-
+    var boompng = new CSpirit();
+    boompng.init("boomId","boom1","gameRoom","60px","60px");
+    boompng.show();
+    boompng.move(sX_coor,sY_coor);
+    var className , num = 1;
     var t = window.setInterval(
         function(){
-            for(var i = 1; i <= 10;i++){
-                var boompng = new CSpirit();
-                var className = "boom" + i;
-                boompng.init("boomId",className,"gameRoom","60px","60px");
-                boompng.show();
-                boompng.move(sX_coor,sY_coor);
-                //alert("fasdf");
-                var destory = boompng.destory();
-                window.setTimeout(destory,1000);
-                //alert("sho");
+            className = "boom" + num++;
+            document.getElementById("boomId").className = className;
+        }
+        ,50);
+
+    window.setTimeout(function (){
+        clearInterval(t);//imeBoom[timeBoomIndex]);
+        boompng.destory();
+    },600);
+}
+
+
+
+//********************************************************************************
+
+
+
+//检测碰撞
+function detectionPlaneAndBullet() {
+
+    //获得所有英雄
+    var heroPlane_box = document.getElementById("hero-plane-box");
+    var heroPlanes = new Array();
+    for(var i = 0;i <  heroPlane_box.childNodes.length;i++) {
+       if(heroPlane_box.childNodes[i].nodeName == "DIV")
+            heroPlanes.push(heroPlane_box.childNodes[i]);
+    }
+
+    //获得所有敌机
+    var enemyPlane_box = document.getElementById("enemy-plane-box");
+    var enemyPlanes = new Array();
+    for(var i = 0;i <  enemyPlane_box.childNodes.length;i++) {
+        if(enemyPlane_box.childNodes[i].nodeName == "DIV")
+            enemyPlanes.push(enemyPlane_box.childNodes[i]);
+    }
+
+    //获得所有子弹
+    var bullet_box = document.getElementById("bullets-box");
+    var bullets = bullet_box.childNodes;
+    var heroBullets = new Array(), enemyBullets = new Array();
+    for(var i = 0;i < bullets.length;i++){
+        if(bullets[i].nodeName == "DIV" && bullets[i].className == "hreo-bullet"){
+            heroBullets.push(bullets[i]);}
+        else if(bullets[i].nodeName == "DIV" && bullets[i].className.substring != "hreo-bullet"){//("hreo-bullet")>0)
+            enemyBullets.push(bullets[i]);}
+    }
+
+    //是否碰撞
+    function isPengZhuang(id1, id2){
+        var ele1 = document.getElementById(id1);
+        var ele2 = document.getElementById(id2);
+
+        var x1 = parseInt(ele1.style.left) + parseInt(ele1.style.width)/2;
+        var y1 = parseInt(ele1.style.top) + parseInt(ele1.style.height)/2;
+        var x2 = parseInt(ele2.style.left) + parseInt(ele2.style.width)/2;
+        var y2 = parseInt(ele2.style.top) + parseInt(ele2.style.height)/2;
+
+        if( Math.abs(x1 - x2) < (parseInt(ele1.style.width) + parseInt(ele2.style.width))/2 -15
+            && Math.abs(y1 - y2) < (parseInt(ele1.style.height) + parseInt(ele2.style.height))/2 - 15){
+        /*alert(Math.abs(x1 - x2) + " "
+             + (parseInt(ele1.style.width) + parseInt(ele2.style.width))/2 + " "
+             + (Math.abs(y1 - y2)) + " "
+             + (parseInt(ele1.style.height) + parseInt(ele2.style.height))/2);*/
+            return true;
+        }
+              //alert("false");
+        return false;
+    }
+
+    //检测heroBullet和enemy的碰撞
+    for(var i = 0 ;i < enemyPlanes.length;i++){
+        for(var j= 0 ;j < heroBullets.length;j++){
+            if(isPengZhuang(enemyPlanes[i].id, heroBullets[j].id)){
+                    //alert(parseInt(enemyPlanes[i].getAttribute("blood")));
+                if(parseInt(enemyPlanes[i].getAttribute("blood")) <= 0) {
+                    var x1 = parseInt(enemyPlanes[i].style.left);
+                    var y1 = parseInt(enemyPlanes[i].style.top);
+                    boom(x1 + "px", y1 + "px");
+                    director.infomationGroup.updateInformation("Score:", (parseInt(director.infomationGroup.getContent("Score:")) + 10).toString());
+
+                    enemyPlanes[i].parentNode.removeChild(enemyPlanes[i]);
+                    enemyPlanes.splice(i, 1);
+                }
+                else{
+                    enemyPlanes[i].setAttribute("blood",(parseInt(enemyPlanes[i].getAttribute("blood")) - 20).toString());
+                }
+                heroBullets[i].parentNode.removeChild(heroBullets[i]);
+                heroBullets.splice(i, 1);
             }
         }
-        ,1000);
+    }
+
+    //检测enemyBullet和hero的碰撞
+    for(var i = 0 ;i < heroPlanes.length;i++){
+        for(var j= 0 ;j < enemyBullets.length;j++){
+            if(isPengZhuang(heroPlanes[i].id, enemyBullets[j].id)){
+
+                //alert(parseInt(enemyPlanes[i].getAttribute("blood")));
+                if(parseInt(heroPlanes[i].getAttribute("blood")) <= 0) {
+                    var x1 = parseInt(heroPlanes[i].style.left);
+                    var y1 = parseInt(heroPlanes[i].style.top);
+                    boom(x1 + "px", y1 + "px");
+
+                    heroPlanes[i].parentNode.removeChild(heroPlanes[i]);
+                    heroPlanes.splice(i, 1);
+                }
+                else{
+                    director.infomationGroup.updateInformation("Blood:", (parseInt(director.infomationGroup.getContent("Blood:")) - 20).toString());
+                    document.getElementById("hero-plane-boom-box").style.zIndex = "11";
+                    window.setTimeout(function(){document.getElementById("hero-plane-boom-box").style.zIndex = "0";},200);
+                    //alert("sdaf");
+                    heroPlanes[i].setAttribute("blood",(parseInt(heroPlanes[i].getAttribute("blood")) - 20).toString());
+                }
+                enemyBullets[i].parentNode.removeChild(enemyBullets[i]);
+                enemyBullets.splice(i, 1);
+            }
+        }
+    }
+
 }
+
 //*******************************************************************************
-boom("100px","100px");
+
 
 document.onkeydown = function(e){ var e = e || window.event; if(e.keyCode == 13) startGame();}
+
 
