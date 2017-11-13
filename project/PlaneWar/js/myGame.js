@@ -638,8 +638,8 @@ CDirector.prototype.createEnemyPlane = function (sId, sClass, sPreId, sWidth, sH
     enemyPlane.direction = sDir;
     enemyPlane.show();
     enemyPlane.move(sX_coor,sY_coor);
-    enemyPlane.actionStart(sDir,10);
-    enemyPlane.fire(1000);
+    //enemyPlane.actionStart(sDir,10);
+    enemyPlane.fire(1500);
 }
 
 
@@ -692,6 +692,20 @@ window.setInterval(
         }
     }
     ,50);
+
+//所有敌机移动
+window.setInterval(
+    function(){
+        var enemyPlane_box = document.getElementById("enemy-plane-box");
+        var enemyPlanes = enemyPlane_box.childNodes;
+
+        for(var i = 0;i < enemyPlanes.length;i++){
+            if(enemyPlanes[i].nodeName == "DIV")
+                enemyPlanes[i].style.top = parseInt(enemyPlanes[i].style.top) + 1 + "px";
+        }
+    }
+    ,10);
+
 
 //超界元素清除 和 hero 不可以出界
 window.setInterval(
@@ -816,6 +830,14 @@ function  boom(sX_coor, sY_coor) {
     boompng.show();
     boompng.move(sX_coor,sY_coor);
     var className , num = 1;
+
+    window.setTimeout(function(){
+        className = "boom" + num++;
+        document.getElementById("boomId").className = className;
+
+    },50);
+
+
     var t = window.setInterval(
         function(){
             className = "boom" + num++;
