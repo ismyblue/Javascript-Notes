@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <script>
+        function q2() {
+            var intnum = document.getElementsByName("q2")[0].value;
+            if(intnum > 0){
+                document.getElementsByName("a2")[0].value = "大于0";
+            }else if(intnum < 0){
+                document.getElementsByName("a2")[0].value = "小于0";
+            }else if(intnum == 0){
+                document.getElementsByName("a2")[0].value = "等于0";
+            }
+        }
+
+        function q3() {
+            var intnum = document.getElementsByName("q3")[0].value;
+            if (intnum % 2 == 0) {
+                document.getElementsByName("a3")[0].value = "偶数";
+            } else if (intnum % 2 == 1) {
+                document.getElementsByName("a3")[0].value = "奇数";
+            }
+        }
+
+        function q4() {
+            var height = document.getElementsByName("q4s")[0].value;
+            var weight = document.getElementsByName("q4t")[0].value;
+            if (weight < ((height - 108) * 2 -10)  || weight > ((height - 108) * 2 +10)) {
+                document.getElementsByName("a4")[0].value = "不符合标准";
+            } else{
+                document.getElementsByName("a4")[0].value = "符合标准";
+            }
+        }
+
+        function q5() {
+           var r = document.getElementsByName("q5")[0].value;
+           document.getElementsByName("a5")[0].value = 3.1415926535*r*r ;
+        }
+
+        function q6(){
+            var year = document.getElementsByName("q6y")[0].value;
+            var month = document.getElementsByName("q6m")[0].value;
+            var day = document.getElementsByName("q6d")[0].value;
+            months = [0,31,28,31,30,31,30,31,31,30,31,30,31];
+            var daySum = 0;
+            for(var i = 0;i < month;i++){
+                daySum += months[i];
+            }
+            daySum += parseInt(day);
+            if(year%4 == 0 && year%100 != 0){
+                if(month > 2)
+                    daySum += 1;
+            }
+            document.getElementsByName("a6")[0].value = daySum;
+        }
+
+         function q7(){
+            var money = document.getElementsByName("q7")[0].value;
+            //含税极距
+            var jiju = [500,2000,5000,2000,40000,60000,80000,100000,100000];
+            //税率
+            var shuilv = [0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45];
+            //速算扣除数
+            var kouchushu = [0,25,125,375,1375,3375,6375,10375,15375];
+            //应缴个人所得税=（工资收入-3500）*税率 –速算扣除数            
+            money -= 3500;          
+           	var index = 0;
+           	for(var i = 0;i < 9;i++){
+           		if(money < jiju[i])
+           			break;
+           		index = i;
+           	}
+           	var result = 0.0;  
+           	result = money*shuilv[index] - kouchushu[index];
+           	document.getElementsByName("a7")[0].value = result;
+
+
+        }
+
+    </script>
+</head>
+<body>
+    <!--Author:黄浩<br>-->
+    <!--Student Number:15190310<br>-->
+    2、判断一个整数属于哪个范围<input type="text" name="q2"><input type="button" value="提交" onclick="q2()">
+    输出：<input type="text" name="a2"><br><br>
+    3、判断一个整数是偶数还是奇数<input type="text" name="q3"><input type="button" value="提交" onclick="q3()">
+    输出：<input type="text" name="a3"><br><br>
+    4、检测体重是否合适,身高：<input type="text" name="q4s">cm 体重：<input type="text" name="q4t">kg <input type="button" value="提交" onclick="q4()">
+    输出：<input type="text" name="a4"><br><br>
+    5、已知圆的半径，求出圆的面积:<input type="text" name="q5"><input type="button" value="提交" onclick="q5()">
+    输出：<input type="text" name="a5"><br><br>
+    6、输入年，月，日，求出该日期是当前年的第几天<br>
+    年：<input type="text" name="q6y"><br>
+    月：<input type="text" name="q6m"><br>
+    日：<input type="text" name="q6d"><br>
+    <input type="button" value="提交" onclick="q6()">
+    输出：<input type="text" name="a6"><br><br>
+    7、工资：<input type="text" name="q7"><input type="button" value="提交" onclick="q7()">
+    个人所得税：<input type="text" name="a7">
+
+</body>
+</html>
